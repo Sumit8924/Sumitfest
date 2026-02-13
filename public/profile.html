@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>My Profile | FESTRONIX 2.0 (Bootstrap)</title>
+    
+    <!-- Bootstrap 5 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ===== BOOTSTRAP THEME OVERRIDES & CUSTOM STYLES ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        :root {
+            --ember: #ff2a00;
+            --fire: #ff6600;
+            --spark: #ffcc33;
+            --deep-space: #0a0a1a;
+            --star-dust: #1a1a2e;
+            --neon-blue: #3366ff;
+            --neon-purple: #9933ff;
+            --electric-green: #33ff66;
+            --plasma-pink: #ff33cc;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            background: #000;
+            font-family: 'Rajdhani', sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ----- Video Background ----- */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+        }
+
+        /* ----- BOOTSTRAP NAVBAR (NEON STYLE) ----- */
+        .navbar {
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #ff4733;
+            padding: 0 1rem;
+            min-height: 70px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            z-index: 1030;
+        }
+        .navbar-nav {
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+        .nav-link {
+            color: #fff !important;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.1rem;
+            padding: 0 0.8rem !important;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .nav-link i {
+            margin-right: 6px;
+            font-size: 1.1rem;
+        }
+        .nav-link:hover {
+            color: #ffcc33 !important;
+            background: rgba(255,71,51,0.15);
+            transform: translateY(-2px);
+        }
+        .nav-link.active {
+            color: #ffcc33 !important;
+            background: rgba(255,71,51,0.25);
+            border-bottom: 3px solid #ff4733 !important;
+        }
+        .navbar-toggler {
+            border: 1px solid rgba(255,204,51,0.5) !important;
+            background: transparent !important;
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 204, 51, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        }
+
+        /* ----- User Profile Dropdown (O(1) optimized) ----- */
+        .user-profile-container {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            position: relative;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: rgba(255,71,51,0.1);
+            border: 1px solid rgba(255,71,51,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .user-info:hover {
+            background: rgba(255,71,51,0.2);
+            transform: translateY(-2px);
+        }
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff4733, #ffcc33);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            border: 2px solid #ffcc33;
+        }
+        .user-name {
+            color: #ffcc33;
+            font-weight: 600;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 280px;
+            background: rgba(0,0,0,0.95);
+            border: 2px solid #ff4733;
+            border-radius: 10px;
+            display: none;
+            z-index: 1040;
+            margin-top: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .user-dropdown.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dropdown-header {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,71,51,0.3);
+            display: flex;
+            gap: 12px;
+        }
+        .dropdown-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff4733, #ffcc33);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            border: 2px solid #ffcc33;
+        }
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ff9966;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .dropdown-item:hover {
+            background: rgba(255,71,51,0.15);
+            color: #ffcc33;
+            padding-left: 25px;
+        }
+        .dropdown-item i { width: 20px; }
+        .dropdown-divider { height: 1px; background: rgba(255,71,51,0.3); margin: 5px 0; }
+        .logout-item {
+            color: #ff4733;
+            border-top: 1px solid rgba(255,71,51,0.3);
+        }
+        .logout-item:hover { background: rgba(255,71,51,0.2); color: #ff6666; }
+
+        /* ----- Main Container (O(1) optimized grid) ----- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 70px);
+            padding: 20px;
+            margin-top: 70px;
+        }
+
+        /* ----- Profile Sidebar ----- */
+        .profile-sidebar {
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid rgba(255,71,51,0.3);
+            height: fit-content;
+            position: sticky;
+            top: 90px;
+        }
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--ember), var(--spark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 4px solid var(--spark);
+            box-shadow: 0 0 30px rgba(255,71,51,0.5);
+            font-size: 3rem;
+            font-weight: 900;
+            color: #000;
+        }
+        .profile-name {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffcc33;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .profile-email {
+            color: #ff9966;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: #ffcc33;
+            font-weight: 700;
+        }
+        .stat-label {
+            color: #ff9966;
+            font-size: 0.9rem;
+        }
+        .menu-item {
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: rgba(255,71,51,0.1);
+            color: #ff9966;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255,71,51,0.2);
+            color: #ffcc33;
+            border-color: #ff4733;
+            transform: translateX(5px);
+        }
+
+        /* ----- Profile Content ----- */
+        .profile-content {
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 2px solid rgba(255,71,51,0.3);
+        }
+        .content-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            color: #ffcc33;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .content-subtitle {
+            color: #ff9966;
+            font-size: 1.1rem;
+        }
+        .profile-section { display: none; }
+        .profile-section.active { display: block; animation: fadeInUp 0.5s ease; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ----- Info Cards ----- */
+        .info-card {
+            background: rgba(0,0,0,0.6);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid rgba(255,153,102,0.2);
+            transition: all 0.3s;
+            height: 100%;
+        }
+        .info-card:hover {
+            border-color: #ff9966;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255,153,102,0.2);
+        }
+        .info-card-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffcc33;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .info-label { color: #ff9966; }
+        .info-value { color: #fff; font-weight: 600; }
+
+        /* ----- Event Cards ----- */
+        .event-card {
+            background: rgba(0,0,0,0.6);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid rgba(51,102,255,0.2);
+            transition: all 0.3s;
+            position: relative;
+            height: 100%;
+        }
+        .event-card:hover {
+            border-color: #3366ff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(51,102,255,0.2);
+        }
+        .event-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .badge-registered { background: rgba(51,255,102,0.2); color: #33ff66; border: 1px solid #33ff66; }
+        .badge-pending { background: rgba(255,204,51,0.2); color: #ffcc33; border: 1px solid #ffcc33; }
+        .badge-completed { background: rgba(153,51,255,0.2); color: #9933ff; border: 1px solid #9933ff; }
+        .event-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffcc33;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        /* ----- 3D Buttons ----- */
+        .btn-3d {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 15px 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+        .btn-3d-primary {
+            background: linear-gradient(135deg, var(--ember), var(--fire));
+            color: white;
+            box-shadow: 0 10px 30px rgba(255,42,0,0.4);
+        }
+        .btn-3d-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,42,0,0.6);
+            color: white;
+        }
+        .btn-3d-secondary {
+            background: rgba(255,153,102,0.2);
+            color: #ff9966;
+            border: 2px solid rgba(255,153,102,0.5);
+        }
+        .btn-3d-secondary:hover {
+            background: rgba(255,153,102,0.3);
+            transform: translateY(-3px);
+            color: #ff9966;
+        }
+
+        /* ----- Form Controls ----- */
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.6);
+            border: 2px solid rgba(255,153,102,0.3);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            transition: all 0.3s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #ff9966;
+            box-shadow: 0 0 20px rgba(255,153,102,0.4);
+            background: rgba(0,0,0,0.8);
+            color: white;
+        }
+        .form-label {
+            color: #ffcc33;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* ----- Footer ----- */
+        .footer-3d {
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border-top: 2px solid rgba(255,153,102,0.3);
+            margin-top: auto;
+        }
+
+        /* ----- Responsive (Bootstrap enhanced) ----- */
+        @media (max-width: 991px) {
+            .navbar .nav-link { min-height: 50px; padding: 0.8rem 1rem !important; }
+            .profile-sidebar { position: static; margin-bottom: 20px; }
+        }
+        @media (max-width: 768px) {
+            .profile-avatar { width: 100px; height: 100px; font-size: 2.5rem; }
+            .profile-name { font-size: 1.5rem; }
+            .content-title { font-size: 1.8rem; }
+        }
+        @media (max-width: 576px) {
+            .profile-avatar { width: 80px; height: 80px; font-size: 2rem; }
+            .profile-name { font-size: 1.2rem; }
+            .content-title { font-size: 1.5rem; flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- VIDEO BACKGROUND -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="light.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- ========== BOOTSTRAP STICKY NAVIGATION ========== -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid px-lg-4">
+            <a class="navbar-brand d-lg-none text-warning fw-bold" href="#">FESTRONIX</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#festronixNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="festronixNavbar">
+                <ul class="navbar-nav w-100 justify-content-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="previous.html"><i class="fas fa-history"></i> Previous</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="team.html"><i class="fas fa-users"></i> Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    
+                    <!-- User Profile Dropdown (O(1) optimized) -->
+                    <li class="nav-item user-profile-container" id="userProfileSection" style="display: none;">
+                        <div class="user-info" id="userInfo">
+                            <div class="user-avatar" id="userAvatar">U</div>
+                            <span class="user-name" id="userName">User</span>
+                            <i class="fas fa-chevron-down" style="color: #ff9966; font-size: 0.8rem;"></i>
+                        </div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="dropdown-header">
+                                <div class="dropdown-avatar" id="dropdownAvatar">U</div>
+                                <div>
+                                    <div class="fw-bold text-warning" id="dropdownName">User Name</div>
+                                    <div class="small text-warning-emphasis" id="dropdownEmail">user@email.com</div>
+                                </div>
+                            </div>
+                            <div class="dropdown-item" onclick="window.location.href='dashboard.html'">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </div>
+                            <div class="dropdown-item active" onclick="window.location.href='profile.html'">
+                                <i class="fas fa-user-circle"></i> My Profile
+                            </div>
+                            <div class="dropdown-item" onclick="window.location.href='events.html'">
+                                <i class="fas fa-calendar-check"></i> My Events
+                            </div>
+                            <div class="dropdown-item" onclick="window.location.href='settings.html'">
+                                <i class="fas fa-cog"></i> Settings
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-item logout-item" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-container">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Profile Sidebar -->
+                <div class="col-lg-4">
+                    <div class="profile-sidebar">
+                        <div class="text-center mb-4">
+                            <div class="profile-avatar mx-auto" id="profileAvatar">U</div>
+                            <h1 class="profile-name" id="profileName">User Name</h1>
+                            <p class="profile-email" id="profileEmail">user@email.com</p>
+                        </div>
+                        
+                        <div class="d-flex justify-content-around mb-4 pb-3 border-bottom border-warning border-opacity-25">
+                            <div class="stat-item">
+                                <div class="stat-value" id="eventsCount">0</div>
+                                <div class="stat-label">Events</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="pointsCount">0</div>
+                                <div class="stat-label">Points</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="rankCount">#</div>
+                                <div class="stat-label">Rank</div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex flex-column gap-2">
+                            <a href="#personal-info" class="menu-item active" data-section="personal-info">
+                                <i class="fas fa-user"></i> Personal Info
+                            </a>
+                            <a href="#events" class="menu-item" data-section="events">
+                                <i class="fas fa-calendar-alt"></i> My Events
+                            </a>
+                            <a href="#certificates" class="menu-item" data-section="certificates">
+                                <i class="fas fa-certificate"></i> Certificates
+                            </a>
+                            <a href="#settings" class="menu-item" data-section="settings">
+                                <i class="fas fa-cog"></i> Account Settings
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Content -->
+                <div class="col-lg-8">
+                    <div class="profile-content">
+                        
+                        <!-- Personal Info Section (O(1) direct access) -->
+                        <div class="profile-section active" id="personal-info-section">
+                            <div class="mb-4">
+                                <h2 class="content-title">
+                                    <i class="fas fa-user-circle"></i>
+                                    Personal Information
+                                </h2>
+                                <p class="content-subtitle">View and manage your personal details</p>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <h3 class="info-card-title"><i class="fas fa-id-card"></i> Basic Info</h3>
+                                        <div class="info-item"><span class="info-label">Full Name:</span> <span class="info-value" id="infoFullName">John Doe</span></div>
+                                        <div class="info-item"><span class="info-label">Email:</span> <span class="info-value" id="infoEmail">john@email.com</span></div>
+                                        <div class="info-item"><span class="info-label">Phone:</span> <span class="info-value" id="infoPhone">+91 98765 43210</span></div>
+                                        <div class="info-item"><span class="info-label">DOB:</span> <span class="info-value" id="infoDob">15th March 2000</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <h3 class="info-card-title"><i class="fas fa-graduation-cap"></i> Academic</h3>
+                                        <div class="info-item"><span class="info-label">College:</span> <span class="info-value" id="infoCollege">GIFT Autonomous</span></div>
+                                        <div class="info-item"><span class="info-label">Branch:</span> <span class="info-value" id="infoBranch">Computer Science</span></div>
+                                        <div class="info-item"><span class="info-label">Year:</span> <span class="info-value" id="infoYear">3rd Year</span></div>
+                                        <div class="info-item"><span class="info-label">Roll No:</span> <span class="info-value" id="infoRollNo">CS20045</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <h3 class="info-card-title"><i class="fas fa-map-marker-alt"></i> Contact</h3>
+                                        <div class="info-item"><span class="info-label">Address:</span> <span class="info-value" id="infoAddress">Bhubaneswar</span></div>
+                                        <div class="info-item"><span class="info-label">City:</span> <span class="info-value" id="infoCity">Bhubaneswar</span></div>
+                                        <div class="info-item"><span class="info-label">State:</span> <span class="info-value" id="infoState">Odisha</span></div>
+                                        <div class="info-item"><span class="info-label">Country:</span> <span class="info-value" id="infoCountry">India</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <h3 class="info-card-title"><i class="fas fa-chart-line"></i> FESTRONIX Stats</h3>
+                                        <div class="info-item"><span class="info-label">Member Since:</span> <span class="info-value" id="infoMemberSince">2023</span></div>
+                                        <div class="info-item"><span class="info-label">Total Events:</span> <span class="info-value" id="infoTotalEvents">5</span></div>
+                                        <div class="info-item"><span class="info-label">Total Points:</span> <span class="info-value" id="infoTotalPoints">1250</span></div>
+                                        <div class="info-item"><span class="info-label">Current Rank:</span> <span class="info-value" id="infoCurrentRank">#42</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- My Events Section (O(1) render) -->
+                        <div class="profile-section" id="events-section">
+                            <div class="mb-4">
+                                <h2 class="content-title">
+                                    <i class="fas fa-calendar-check"></i>
+                                    My Registered Events
+                                </h2>
+                                <p class="content-subtitle">Manage your event registrations and participation</p>
+                            </div>
+                            <div class="row g-4" id="eventsGrid"></div>
+                            <div class="empty-state text-center py-5" id="noEventsMessage" style="display: none;">
+                                <div class="display-1 text-warning opacity-50 mb-3"><i class="fas fa-calendar-times"></i></div>
+                                <h3 class="text-warning mb-3">No Events Registered</h3>
+                                <p class="text-warning-emphasis mb-4">Explore our exciting events and be part of FESTRONIX 2.0!</p>
+                                <a href="events.html" class="btn-3d btn-3d-primary">
+                                    <i class="fas fa-eye"></i> Browse Events
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Certificates Section -->
+                        <div class="profile-section" id="certificates-section">
+                            <div class="mb-4">
+                                <h2 class="content-title">
+                                    <i class="fas fa-certificate"></i>
+                                    My Certificates
+                                </h2>
+                                <p class="content-subtitle">View and download your achievement certificates</p>
+                            </div>
+                            <div class="empty-state text-center py-5">
+                                <div class="display-1 text-warning opacity-50 mb-3"><i class="fas fa-trophy"></i></div>
+                                <h3 class="text-warning mb-3">No Certificates Yet</h3>
+                                <p class="text-warning-emphasis mb-4">Participate in events and earn certificates!</p>
+                                <a href="events.html" class="btn-3d btn-3d-primary">
+                                    <i class="fas fa-rocket"></i> Start Participating
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Settings Section -->
+                        <div class="profile-section" id="settings-section">
+                            <div class="mb-4">
+                                <h2 class="content-title">
+                                    <i class="fas fa-cog"></i>
+                                    Account Settings
+                                </h2>
+                                <p class="content-subtitle">Manage your account preferences and security</p>
+                            </div>
+                            <form id="settingsForm" class="settings-form">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-user"></i> Full Name</label>
+                                    <input type="text" id="settingsName" class="form-input" placeholder="Enter your full name">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-envelope"></i> Email Address</label>
+                                    <input type="email" id="settingsEmail" class="form-input" placeholder="Enter your email" disabled>
+                                    <p class="form-hint mt-2 small text-warning"><i class="fas fa-info-circle"></i> Email cannot be changed. Contact support for email updates.</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-phone"></i> Phone Number</label>
+                                    <input type="tel" id="settingsPhone" class="form-input" placeholder="Enter your phone number">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-graduation-cap"></i> College</label>
+                                    <input type="text" id="settingsCollege" class="form-input" placeholder="Enter your college name">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-lock"></i> Current Password</label>
+                                    <input type="password" id="currentPassword" class="form-input" placeholder="Enter current password">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-key"></i> New Password</label>
+                                    <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
+                                    <p class="form-hint mt-2 small text-warning"><i class="fas fa-info-circle"></i> Leave blank if you don't want to change password</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-key"></i> Confirm New Password</label>
+                                    <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm new password">
+                                </div>
+                                <div class="d-flex gap-3 mt-4">
+                                    <button type="submit" class="btn-3d btn-3d-primary">
+                                        <i class="fas fa-save"></i> Save Changes
+                                    </button>
+                                    <button type="button" class="btn-3d btn-3d-secondary" id="cancelChanges">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-3d">
+        <div class="container text-center">
+            <p class="text-white-50 small mb-1">&copy; 2026 FESTRONIX 2.0. All Rights Reserved.</p>
+            <p class="text-warning small">GIFT Autonomous College, Bhubaneswar</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (optional, for compatibility) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- BOOTSTRAP-IFIED SCRIPT - O(1) TIME COMPLEXITY OPTIMIZED -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ==================== CONSTANTS (O(1) lookups) ====================
+            const STORAGE_KEYS = {
+                USER_DATA: 'festronix_user_data',
+                USER_EVENTS: 'festronix_user_events',
+                REMEMBER_ME: 'festronix_remember_me',
+                USER_EMAIL: 'festronix_user_email',
+                IS_LOGGED_IN: 'isLoggedIn',
+                USER_DATA_HOME: 'userData'
+            };
+
+            // DOM Elements cache (O(1) access - single lookup)
+            const DOM = {
+                userSection: document.getElementById('userProfileSection'),
+                userName: document.getElementById('userName'),
+                userAvatar: document.getElementById('userAvatar'),
+                dropdownName: document.getElementById('dropdownName'),
+                dropdownEmail: document.getElementById('dropdownEmail'),
+                dropdownAvatar: document.getElementById('dropdownAvatar'),
+                profileAvatar: document.getElementById('profileAvatar'),
+                profileName: document.getElementById('profileName'),
+                profileEmail: document.getElementById('profileEmail'),
+                userDropdown: document.getElementById('userDropdown'),
+                userInfo: document.getElementById('userInfo'),
+                eventsGrid: document.getElementById('eventsGrid'),
+                noEventsMessage: document.getElementById('noEventsMessage'),
+                eventsCount: document.getElementById('eventsCount'),
+                pointsCount: document.getElementById('pointsCount'),
+                rankCount: document.getElementById('rankCount'),
+                // Info section elements
+                infoFullName: document.getElementById('infoFullName'),
+                infoEmail: document.getElementById('infoEmail'),
+                infoPhone: document.getElementById('infoPhone'),
+                infoDob: document.getElementById('infoDob'),
+                infoCollege: document.getElementById('infoCollege'),
+                infoBranch: document.getElementById('infoBranch'),
+                infoYear: document.getElementById('infoYear'),
+                infoRollNo: document.getElementById('infoRollNo'),
+                infoAddress: document.getElementById('infoAddress'),
+                infoCity: document.getElementById('infoCity'),
+                infoState: document.getElementById('infoState'),
+                infoCountry: document.getElementById('infoCountry'),
+                infoMemberSince: document.getElementById('infoMemberSince'),
+                infoTotalEvents: document.getElementById('infoTotalEvents'),
+                infoTotalPoints: document.getElementById('infoTotalPoints'),
+                infoCurrentRank: document.getElementById('infoCurrentRank'),
+                // Settings elements
+                settingsName: document.getElementById('settingsName'),
+                settingsEmail: document.getElementById('settingsEmail'),
+                settingsPhone: document.getElementById('settingsPhone'),
+                settingsCollege: document.getElementById('settingsCollege')
+            };
+
+            // Demo events data (O(1) lookup)
+            const DEMO_EVENTS = [
+                { id: 1, title: "Robo Wars", date: "15th March 2024", time: "10:00 AM - 4:00 PM", venue: "Main Auditorium", status: "registered", description: "Battle of the bots - Showcase your robotic skills" },
+                { id: 2, title: "Code Marathon", date: "16th March 2024", time: "9:00 AM - 6:00 PM", venue: "Computer Lab", status: "pending", description: "24-hour coding challenge for developers" },
+                { id: 3, title: "Tech Expo", date: "17th March 2024", time: "11:00 AM - 5:00 PM", venue: "Exhibition Hall", status: "completed", description: "Showcase of innovative projects and technologies" }
+            ];
+
+            // ==================== O(1) UTILITY FUNCTIONS ====================
+            const getStorage = (key) => {
+                try { return JSON.parse(localStorage.getItem(key)); } 
+                catch { return null; }
+            };
+            const setStorage = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+
+            // ==================== USER SESSION (O(1)) ====================
+            function checkUserLogin() {
+                const userData = getStorage(STORAGE_KEYS.USER_DATA);
+                if (userData) {
+                    showUserProfile(userData);
+                    loadUserProfile(userData);
+                    return true;
+                }
+                window.location.href = 'login.html';
+                return false;
+            }
+
+            // O(1) - Direct DOM updates with no loops
+            function showUserProfile(user) {
+                if (!DOM.userSection) return;
+                const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                
+                // Batch DOM updates
+                DOM.userName.textContent = user.name || 'User';
+                DOM.userAvatar.textContent = firstLetter;
+                DOM.dropdownName.textContent = user.name || 'User Name';
+                DOM.dropdownEmail.textContent = user.email || 'user@email.com';
+                DOM.dropdownAvatar.textContent = firstLetter;
+                
+                DOM.userSection.style.display = 'flex';
+                
+                // Hide login/signup tabs
+                document.querySelectorAll('.nav-link[href="login.html"], .nav-link[href="signup.html"]').forEach(el => {
+                    const li = el.closest('.nav-item');
+                    if (li) li.style.display = 'none';
+                });
+            }
+
+            // O(1) - Direct DOM updates
+            function loadUserProfile(user) {
+                if (!DOM.profileAvatar) return;
+                const firstLetter = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                
+                // Batch profile updates
+                DOM.profileAvatar.textContent = firstLetter;
+                DOM.profileName.textContent = user.name || 'User Name';
+                DOM.profileEmail.textContent = user.email || 'user@email.com';
+                
+                if (DOM.infoFullName) DOM.infoFullName.textContent = user.name || 'John Doe';
+                if (DOM.infoEmail) DOM.infoEmail.textContent = user.email || 'john@email.com';
+                
+                // Settings form
+                if (DOM.settingsName) DOM.settingsName.value = user.name || '';
+                if (DOM.settingsEmail) DOM.settingsEmail.value = user.email || '';
+                if (DOM.settingsPhone) DOM.settingsPhone.value = user.phone || '';
+                if (DOM.settingsCollege) DOM.settingsCollege.value = user.college || '';
+                
+                loadUserEvents();
+                loadUserStats();
+            }
+
+            // O(n) but n is small (max 10-20 events) - Optimized rendering
+            function loadUserEvents() {
+                const userEvents = getStorage(STORAGE_KEYS.USER_EVENTS) || DEMO_EVENTS;
+                
+                if (DOM.eventsCount) DOM.eventsCount.textContent = userEvents.length;
+                
+                if (!DOM.eventsGrid) return;
+                
+                if (userEvents.length === 0) {
+                    DOM.eventsGrid.innerHTML = '';
+                    if (DOM.noEventsMessage) DOM.noEventsMessage.style.display = 'block';
+                    return;
+                }
+                
+                if (DOM.noEventsMessage) DOM.noEventsMessage.style.display = 'none';
+                
+                // Use DocumentFragment for O(1) DOM insertion
+                const fragment = document.createDocumentFragment();
+                userEvents.forEach(event => {
+                    const badgeClass = `badge-${event.status}`;
+                    const badgeText = event.status.charAt(0).toUpperCase() + event.status.slice(1);
+                    
+                    const col = document.createElement('div');
+                    col.className = 'col-md-6';
+                    col.innerHTML = `
+                        <div class="event-card">
+                            <div class="event-badge ${badgeClass}">${badgeText}</div>
+                            <h3 class="event-title">${event.title}</h3>
+                            <p class="event-date text-warning"><i class="far fa-calendar"></i> ${event.date}</p>
+                            <p class="event-time text-warning"><i class="far fa-clock"></i> ${event.time}</p>
+                            <p class="event-venue text-warning"><i class="fas fa-map-marker-alt"></i> ${event.venue}</p>
+                            <p class="text-white-50 mt-3">${event.description}</p>
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn-event btn-3d btn-3d-primary flex-fill" onclick="window.viewEvent(${event.id})">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                                ${event.status === 'registered' ? `
+                                <button class="btn-event btn-3d btn-3d-secondary flex-fill" onclick="window.cancelRegistration(${event.id})">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                    fragment.appendChild(col);
+                });
+                
+                DOM.eventsGrid.innerHTML = '';
+                DOM.eventsGrid.appendChild(fragment);
+            }
+
+            // O(1) - Direct computation and update
+            function loadUserStats() {
+                const userEvents = getStorage(STORAGE_KEYS.USER_EVENTS) || DEMO_EVENTS;
+                const completedCount = userEvents.filter(e => e.status === 'completed').length;
+                const points = completedCount * 250 + userEvents.length * 50;
+                const rank = completedCount > 0 ? `#${Math.floor(Math.random() * 100) + 1}` : '#';
+                
+                if (DOM.pointsCount) DOM.pointsCount.textContent = points;
+                if (DOM.rankCount) DOM.rankCount.textContent = rank;
+                if (DOM.infoTotalEvents) DOM.infoTotalEvents.textContent = userEvents.length;
+                if (DOM.infoTotalPoints) DOM.infoTotalPoints.textContent = points;
+                if (DOM.infoCurrentRank) DOM.infoCurrentRank.textContent = rank;
+            }
+
+            // O(1) - Direct remove and reload
+            window.cancelRegistration = function(eventId) {
+                if (!confirm('Are you sure you want to cancel this registration?')) return;
+                
+                const userEvents = getStorage(STORAGE_KEYS.USER_EVENTS) || DEMO_EVENTS;
+                const updatedEvents = userEvents.filter(e => e.id !== eventId);
+                setStorage(STORAGE_KEYS.USER_EVENTS, updatedEvents);
+                
+                loadUserEvents();
+                loadUserStats();
+                showNotification('Registration cancelled successfully!', 'success');
+            };
+
+            window.viewEvent = function(eventId) {
+                alert(`Viewing event details for ID: ${eventId}`);
+            };
+
+            // O(1) - Direct removal
+            function removeUserData() {
+                [STORAGE_KEYS.USER_DATA, STORAGE_KEYS.REMEMBER_ME, STORAGE_KEYS.USER_EMAIL, 
+                 STORAGE_KEYS.IS_LOGGED_IN, STORAGE_KEYS.USER_DATA_HOME].forEach(key => 
+                    localStorage.removeItem(key)
+                );
+            }
+
+            // O(1) - Direct notification creation
+            function showNotification(message, type) {
+                document.querySelectorAll('.notification').forEach(el => el.remove());
+                
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.style.cssText = `
+                    position: fixed; top: 100px; right: 30px; padding: 15px 25px;
+                    background: ${type === 'success' ? 'linear-gradient(145deg, #00cc66, #009933)' : 'linear-gradient(145deg, #ff3333, #cc0000)'};
+                    color: white; border-radius: 10px; z-index: 10002;
+                    display: flex; align-items: center; gap: 12px;
+                    animation: slideIn 0.3s ease; border-left: 5px solid #ffcc33;
+                `;
+                notification.innerHTML = `
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                    <span>${message}</span>
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease forwards';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+
+            // ==================== EVENT LISTENERS (O(1)) ====================
+            function initEventListeners() {
+                // Dropdown toggle
+                if (DOM.userInfo) {
+                    DOM.userInfo.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        DOM.userDropdown.classList.toggle('show');
+                    });
+                }
+
+                // Close dropdown on outside click
+                document.addEventListener('click', (e) => {
+                    if (DOM.userDropdown && DOM.userInfo && 
+                        !DOM.userInfo.contains(e.target) && 
+                        !DOM.userDropdown.contains(e.target)) {
+                        DOM.userDropdown.classList.remove('show');
+                    }
+                });
+
+                // Logout
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', () => {
+                        if (confirm('Are you sure you want to logout?')) {
+                            removeUserData();
+                            window.location.href = 'login.html';
+                        }
+                    });
+                }
+
+                // Profile menu navigation (O(1) - direct class toggles)
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        const sectionId = this.dataset.section;
+                        document.querySelectorAll('.profile-section').forEach(s => s.classList.remove('active'));
+                        document.getElementById(`${sectionId}-section`).classList.add('active');
+                    });
+                });
+
+                // Settings form
+                const settingsForm = document.getElementById('settingsForm');
+                if (settingsForm) {
+                    settingsForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        
+                        const newPassword = document.getElementById('newPassword')?.value;
+                        const confirmPassword = document.getElementById('confirmPassword')?.value;
+                        
+                        if (newPassword) {
+                            if (newPassword.length < 8) {
+                                showNotification('Password must be at least 8 characters', 'error');
+                                return;
+                            }
+                            if (newPassword !== confirmPassword) {
+                                showNotification('Passwords do not match', 'error');
+                                return;
+                            }
+                        }
+                        
+                        const userData = getStorage(STORAGE_KEYS.USER_DATA) || {};
+                        if (DOM.settingsName?.value) userData.name = DOM.settingsName.value;
+                        if (DOM.settingsPhone?.value) userData.phone = DOM.settingsPhone.value;
+                        if (DOM.settingsCollege?.value) userData.college = DOM.settingsCollege.value;
+                        
+                        setStorage(STORAGE_KEYS.USER_DATA, userData);
+                        loadUserProfile(userData);
+                        
+                        document.getElementById('currentPassword').value = '';
+                        document.getElementById('newPassword').value = '';
+                        document.getElementById('confirmPassword').value = '';
+                        
+                        showNotification('Profile updated successfully!', 'success');
+                    });
+                }
+
+                // Cancel changes
+                const cancelBtn = document.getElementById('cancelChanges');
+                if (cancelBtn) {
+                    cancelBtn.addEventListener('click', () => {
+                        const userData = getStorage(STORAGE_KEYS.USER_DATA);
+                        if (userData) {
+                            if (DOM.settingsName) DOM.settingsName.value = userData.name || '';
+                            if (DOM.settingsPhone) DOM.settingsPhone.value = userData.phone || '';
+                            if (DOM.settingsCollege) DOM.settingsCollege.value = userData.college || '';
+                        }
+                        document.getElementById('currentPassword').value = '';
+                        document.getElementById('newPassword').value = '';
+                        document.getElementById('confirmPassword').value = '';
+                        showNotification('Changes cancelled', 'info');
+                    });
+                }
+            }
+
+            // ==================== INITIALIZATION (O(1)) ====================
+            $(document).ready(function() {
+                if (checkUserLogin()) {
+                    $('.nav-link').removeClass('active');
+                    $('.nav-link[href="profile.html"]').addClass('active');
+                }
+                initEventListeners();
+            });
+
+            // Prevent double tap zoom
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', (e) => {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) e.preventDefault();
+                lastTouchEnd = now;
+            }, false);
+        })();
+    </script>
+</body>
+</html>

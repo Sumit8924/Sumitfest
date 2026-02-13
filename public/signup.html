@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Sign Up – FESTRONIX 2.0 (Bootstrap O(1))</title>
+    
+    <!-- BOOTSTRAP 5 + ICONS + FONTS – O(1) LAYOUT -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome (for some icons, but we mostly use bi) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ========== O(1) THEME – minimal, all direct, no complex loops ========== */
+        :root {
+            --blood: #b30000;
+            --ember: #ff2a00;
+            --fire: #ff5500;
+            --yellow-gold: #ffcc33;
+            --light-orange: #ff9966;
+            --dark-bg: #0a0000;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #000;
+            font-family: 'Rajdhani', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        /* ----- VIDEO BACKGROUND ----- */
+        .video-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1;
+            overflow: hidden;
+        }
+        .video-background video {
+            position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
+            transform: translate(-50%, -50%); object-fit: cover;
+        }
+        .video-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); }
+        
+        /* ----- LOADER – O(1) constant animation ----- */
+        .loader-container {
+            position: fixed; inset: 0; background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.5s, visibility 0.5s;
+        }
+        .loader-hidden { opacity: 0; visibility: hidden; }
+        .loader-letter {
+            font-family: 'Orbitron', sans-serif; font-size: 4rem; font-weight: 900;
+            color: #ff4733; text-shadow: 0 0 15px rgba(255,71,51,0.7); opacity: 0;
+            animation: letterReveal 0.3s forwards; margin: 0 3px;
+        }
+        @keyframes letterReveal { to { opacity: 1; text-shadow: 0 0 20px #ff4733; } }
+        .loader-wrapper { display: flex; flex-wrap: wrap; justify-content: center; }
+        .loader {
+            position: absolute; bottom: -30px; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, #ffcc33, transparent);
+            animation: loadingBar 2.5s ease-in-out forwards;
+        }
+        @keyframes loadingBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .loader-subtitle {
+            font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; color: #ff9966;
+            letter-spacing: 2px; margin-top: 20px; opacity: 0; animation: fadeIn 0.5s forwards 1.5s;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* ----- BOOTSTRAP NAV OVERRIDE (festronix theme) O(1)----- */
+        .festronix-nav {
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
+            border-bottom: 2px solid #ff4733; padding: 0 1rem; height: 70px;
+        }
+        .nav-link-custom {
+            color: #fff !important; font-weight: 600; letter-spacing: 0.1rem;
+            padding: 0.5rem 1rem !important; font-family: 'Rajdhani', sans-serif;
+            display: flex; align-items: center; gap: 6px; position: relative;
+        }
+        .nav-link-custom i { font-size: 1.1rem; }
+        .nav-link-custom:hover { color: #ffcc33 !important; background: rgba(255,71,51,0.15); transform: translateY(-2px); }
+        .nav-link-custom.active {
+            color: #ffcc33 !important; background: rgba(255,71,51,0.25);
+        }
+        .nav-link-custom.active::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 3px; background: #ff4733; box-shadow: 0 0 15px #ff4733;
+        }
+        .user-auth-btn {
+            background: rgba(255,71,51,0.3); border: none; color: white; font-weight: 600;
+            padding: 0.5rem 1.2rem; height: 70px; border-radius: 0; display: flex; align-items: center;
+        }
+        .user-auth-btn:hover { background: rgba(255,71,51,0.4); color: #ffcc33; }
+
+        /* ----- MOBILE OVERLAY (bootstrap offcanvas style, O(1) toggle) ----- */
+        .mobile-nav-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
+            z-index: 2000; display: none;
+        }
+        .mobile-nav-overlay.show { display: block; }
+        .mobile-nav-container {
+            position: absolute; top: 0; right: 0; width: 85%; height: 100%;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e); border-left: 2px solid #ff4733;
+            padding: 2rem 1.5rem;
+        }
+        .mobile-close-btn { background: none; border: none; color: #ffcc33; font-size: 1.5rem; }
+
+        /* ----- SIGNUP CARD – premium 3D effect, O(1) constant ----- */
+        .signup-card {
+            background: rgba(0,0,0,0.85); border-radius: 20px; padding: 2.5rem;
+            border: 2px solid #ff4733; max-width: 550px; width: 100%;
+            box-shadow: 0 0 30px rgba(255,71,51,0.3), inset 0 0 20px rgba(255,71,51,0.1);
+            backdrop-filter: blur(15px);
+        }
+        .signup-header h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 2.5rem; color: #ffcc33;
+            text-shadow: 0 0 15px rgba(255,204,51,0.8); text-transform: uppercase;
+        }
+        .form-label {
+            color: #ffcc33; font-family: 'Orbitron', sans-serif; font-size: 0.95rem;
+            letter-spacing: 1px; margin-bottom: 0.3rem;
+        }
+        .form-input {
+            width: 100%; padding: 0.9rem 1.2rem; background: rgba(255,255,255,0.08);
+            border: 2px solid rgba(255,71,51,0.5); border-radius: 12px;
+            color: white; font-size: 1rem; transition: 0.3s;
+        }
+        .form-input:focus {
+            border-color: #ffcc33; box-shadow: 0 0 15px rgba(255,204,51,0.4);
+            background: rgba(255,255,255,0.12); outline: none;
+        }
+        .password-toggle {
+            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; color: #ff9966; font-size: 1.2rem;
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, #ff3366, #ff9966, #ffcc33);
+            border: none; padding: 1rem; font-family: 'Orbitron', sans-serif;
+            font-weight: 700; font-size: 1.3rem; border-radius: 12px;
+            color: white; text-transform: uppercase; letter-spacing: 2px;
+            transition: 0.3s; box-shadow: 0 0 20px rgba(255,51,102,0.3);
+        }
+        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,51,102,0.5); }
+        .error-message { color: #ff3366; font-size: 0.85rem; display: none; margin-top: 5px; }
+        .error-message.show { display: block; }
+        .form-input.error { border-color: #ff3366; box-shadow: 0 0 10px rgba(255,51,102,0.3); }
+        .form-input.success { border-color: #33ff66; box-shadow: 0 0 10px rgba(51,255,102,0.3); }
+        .success-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 10000; animation: fadeIn 0.5s;
+        }
+        .footer-3d { border-top: 2px solid #ff4733; background: #000; padding: 2rem 0; margin-top: auto; }
+        .social-icon {
+            width: 45px; height: 45px; border-radius: 50%; background: rgba(255,71,51,0.2);
+            display: inline-flex; align-items: center; justify-content: center;
+            color: #ffcc33; transition: 0.3s; text-decoration: none;
+        }
+        .social-icon:hover { background: rgba(255,71,51,0.4); transform: translateY(-5px); }
+        .notification {
+            position: fixed; top: 100px; right: 20px; padding: 1rem 1.8rem;
+            border-radius: 8px; display: flex; align-items: center; gap: 12px;
+            z-index: 10000; animation: slideIn 0.3s; font-weight: 600; color: white;
+        }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @media (max-width: 768px) {
+            .signup-header h1 { font-size: 2rem; }
+            .loader-letter { font-size: 2.5rem; }
+        }
+        @media (max-width: 576px) {
+            .signup-card { padding: 1.8rem; }
+        }
+        /* bootstrap overrides */
+        .navbar-collapse { flex-grow: 0; }
+    </style>
+</head>
+<body>
+    <!-- VIDEO BACKGROUND -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline><source src="light.mp4" type="video/mp4"></video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- LOADER – O(1) direct DOM removal after 2.5s -->
+    <div class="loader-container" id="loader">
+        <div class="loader-wrapper">
+            <span class="loader-letter">F</span><span class="loader-letter">E</span><span class="loader-letter">S</span><span class="loader-letter">T</span>
+            <span class="loader-letter">R</span><span class="loader-letter">O</span><span class="loader-letter">N</span><span class="loader-letter">I</span>
+            <span class="loader-letter">X</span><span class="loader-letter">&nbsp;</span><span class="loader-letter">2</span><span class="loader-letter">.</span><span class="loader-letter">0</span>
+            <div class="loader"></div>
+        </div>
+        <div class="loader-subtitle">CREATING ACCOUNT</div>
+    </div>
+
+    <!-- ===== BOOTSTRAP NAVBAR (FIXED, O(1) LAYOUT) ===== -->
+    <nav class="navbar navbar-expand-lg festronix-nav fixed-top px-3">
+        <div class="container-fluid">
+            <span class="navbar-brand d-lg-none text-warning" style="font-family: Orbitron;">F2.0</span>
+            <div class="collapse navbar-collapse" id="festronixNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex align-items-center">
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="previous.html"><i class="fas fa-history"></i> Previous Year</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="gallery.html"><i class="fas fa-images"></i> Picture Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="sponsors.html"><i class="fas fa-handshake"></i> Sponsorship</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="team.html"><i class="fas fa-users"></i> Team</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li class="nav-item" id="userAuthContainer"></li>
+                </ul>
+            </div>
+            <!-- mobile toggler -->
+            <button class="navbar-toggler border-0 p-2" type="button" id="mobileMenuBtn">
+                <i class="fas fa-bars fs-2" style="color: #ffcc33;"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE OVERLAY -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+        <div class="mobile-nav-container">
+            <div class="d-flex justify-content-between align-items-center text-white mb-4">
+                <div><i class="fas fa-user-circle fs-1" style="color: #ff9966;"></i></div>
+                <button class="mobile-close-btn" id="mobileCloseBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="mobile-user-details text-white mb-4">
+                <h4 id="mobileUserName">Guest</h4>
+                <p id="mobileUserEmail" class="text-secondary">Not logged in</p>
+            </div>
+            <div class="d-flex flex-column gap-2">
+                <a href="index.html" class="mobile-nav-item text-white text-decoration-none p-2"><i class="fas fa-home me-3"></i>Home</a>
+                <a href="previous.html" class="mobile-nav-item text-white text-decoration-none p-2"><i class="fas fa-history me-3"></i>Previous Year</a>
+                <a href="gallery.html" class="mobile-nav-item text-white text-decoration-none p-2"><i class="fas fa-images me-3"></i>Gallery</a>
+                <a href="events.html" class="mobile-nav-item text-white text-decoration-none p-2"><i class="fas fa-calendar-alt me-3"></i>Events</a>
+                <a href="sponsors.html" class="mobile-nav-item text-white text-decoration-none p-2"><i class="fas fa-handshake me-3"></i>Sponsorship</a>
+                <a href="team.html" class="mobile-nav-item text-white text-decoration-none p-2"><i class="fas fa-users me-3"></i>Team</a>
+                <a href="contact.html" class="mobile-nav-item text-white text-decoration-none p-2"><i class="fas fa-envelope me-3"></i>Contact</a>
+            </div>
+            <div class="mt-4 d-flex flex-column gap-2" id="mobileAuthButtons"></div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN SIGNUP – BOOTSTRAP GRID O(1) ===== -->
+    <main class="container d-flex align-items-center justify-content-center" style="flex:1; margin-top: 90px; margin-bottom: 30px;">
+        <div class="signup-card">
+            <div class="signup-header text-center mb-4">
+                <img src="Fest4.png" alt="FESTRONIX 2.0" class="img-fluid" style="max-width: 120px;" onerror="this.style.display='none'">
+                <h1 class="mt-3">CREATE ACCOUNT</h1>
+                <p class="text-warning">Join FESTRONIX 2.0 Community</p>
+            </div>
+
+            <!-- FORM – O(1) direct validation -->
+            <form id="signupForm">
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="fas fa-user me-2"></i>FIRST NAME</label>
+                        <input type="text" class="form-input" id="firstName" placeholder="Enter first name" autocomplete="given-name">
+                        <div class="error-message" id="firstNameError"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="fas fa-user me-2"></i>LAST NAME</label>
+                        <input type="text" class="form-input" id="lastName" placeholder="Enter last name" autocomplete="family-name">
+                        <div class="error-message" id="lastNameError"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3 position-relative">
+                    <label class="form-label"><i class="fas fa-mobile-alt me-2"></i>MOBILE NUMBER</label>
+                    <input type="tel" class="form-input" id="mobile" placeholder="Enter 10-digit mobile number" autocomplete="tel">
+                    <div class="error-message" id="mobileError"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label"><i class="fas fa-envelope me-2"></i>EMAIL ID</label>
+                    <input type="email" class="form-input" id="email" placeholder="Enter email address" autocomplete="email">
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="mb-3 position-relative">
+                    <label class="form-label"><i class="fas fa-lock me-2"></i>CREATE PASSWORD</label>
+                    <input type="password" class="form-input" id="password" placeholder="Min 6 characters" autocomplete="new-password">
+                    <button type="button" class="password-toggle" id="passwordToggle"><i class="fas fa-eye"></i></button>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+
+                <div class="mb-4 position-relative">
+                    <label class="form-label"><i class="fas fa-lock me-2"></i>CONFIRM PASSWORD</label>
+                    <input type="password" class="form-input" id="confirmPassword" placeholder="Confirm password" autocomplete="new-password">
+                    <button type="button" class="password-toggle" id="confirmPasswordToggle"><i class="fas fa-eye"></i></button>
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+
+                <button type="submit" class="submit-btn w-100" id="submitBtn">
+                    <span class="btn-glow"></span>
+                    <i class="fas fa-user-plus me-2"></i>SIGN UP
+                </button>
+
+                <div class="text-center mt-4 text-warning">
+                    Already have an account? <a href="login.html" class="text-warning fw-bold text-decoration-none">Login here</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- FOOTER (bootstrap row) -->
+    <footer class="footer-3d">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex gap-3">
+                        <img src="gift logo.png" alt="GIFT" class="college-logo" style="width:60px; height:60px; border-radius:50%;" onerror="this.style.display='none'">
+                        <div><span class="fs-3" style="color:#ffcc33; font-family:Orbitron;">GIFT AUTONOMOUS</span><br><span class="text-secondary">BHUBANESWAR</span></div>
+                    </div>
+                    <p class="text-warning mt-2">Igniting Minds, Empowering Futures</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h4 style="color:#ffcc33;">Connect With Us</h4>
+                    <div class="d-flex gap-2 justify-content-md-end">
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 border-top border-secondary pt-3">
+                <div class="col-12 text-center text-secondary">
+                    <p>© 2026 FESTRONIX 2.0 - GIFT Autonomous College. All Rights Reserved.</p>
+                    <p class="text-warning">Pioneering Technical Education Since 1997</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS: Bootstrap + O(1) constant-time signup logic -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+(function () {
+    "use strict";
+
+    /* ================= LOADER ================= */
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            document.getElementById("loader")?.classList.add("loader-hidden");
+        }, 2500);
+    });
+
+    /* ================= NOTIFICATION ================= */
+    window.showNotification = function (msg, type = "success") {
+        document.querySelector(".notification")?.remove();
+        const n = document.createElement("div");
+        n.className = `notification notification-${type}`;
+        n.innerHTML = msg;
+        document.body.appendChild(n);
+        setTimeout(() => n.remove(), 3000);
+    };
+
+    /* ================= LOGOUT ================= */
+    function logout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "index.html";
+    }
+
+    /* ================= AUTH UI ================= */
+    function updateUserAuthDisplay() {
+        const container = document.getElementById("userAuthContainer");
+        const mobileAuth = document.getElementById("mobileAuthButtons");
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (!container || !mobileAuth) return;
+
+        if (user) {
+            container.innerHTML = `
+                <a href="profile.html" class="nav-link">
+                    <i class="fas fa-user"></i> ${user.firstName}
+                </a>`;
+            mobileAuth.innerHTML = `
+                <a href="profile.html" class="btn btn-outline-warning w-100 mb-2">Profile</a>
+                <button id="logoutBtn" class="btn btn-outline-danger w-100">Logout</button>`;
+            document.getElementById("logoutBtn").onclick = logout;
+        } else {
+            container.innerHTML = `<a href="signup.html" class="nav-link">Signup</a>`;
+            mobileAuth.innerHTML = `
+                <a href="login.html" class="btn btn-outline-warning w-100 mb-2">Login</a>
+                <a href="signup.html" class="btn btn-warning w-100">Signup</a>`;
+        }
+    }
+
+    /* ================= MOBILE MENU ================= */
+    function initMobileMenu() {
+        const btn = document.getElementById("mobileMenuBtn");
+        const overlay = document.getElementById("mobileNavOverlay");
+        const close = document.getElementById("mobileCloseBtn");
+        if (!btn || !overlay || !close) return;
+
+        const toggle = () => overlay.classList.toggle("show");
+        btn.onclick = toggle;
+        close.onclick = toggle;
+        overlay.onclick = e => e.target === overlay && toggle();
+    }
+
+    /* ================= SIGNUP ================= */
+    document.addEventListener("DOMContentLoaded", () => {
+        updateUserAuthDisplay();
+        initMobileMenu();
+
+        const form = document.getElementById("signupForm");
+        if (!form) return;
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const data = {
+                firstName: firstName.value.trim(),
+                lastName: lastName.value.trim(),
+                mobile: mobile.value.trim(),
+                email: email.value.trim().toLowerCase(),
+                password: password.value.trim()
+            };
+
+            if (!Object.values(data).every(Boolean)) {
+                showNotification("All fields required", "error");
+                return;
+            }
+
+            try {
+                const res = await fetch("http://localhost:5000/api/auth/signup", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await res.json();
+                if (!res.ok) {
+                    showNotification(result.msg || "Signup failed", "error");
+                    return;
+                }
+
+                localStorage.setItem("token", result.token);
+                localStorage.setItem("user", JSON.stringify(result.user));
+
+                showNotification("Signup successful!", "success");
+                setTimeout(() => window.location.href = "index.html", 1500);
+
+            } catch (err) {
+                showNotification("Server error", "error");
+            }
+        });
+    });
+
+})();
+</script>
+</body>
+</html>
