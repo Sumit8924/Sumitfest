@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Sign Up – FESTRONIX 2.0 (Bootstrap O(1))</title>
+    <title>Sign Up – FESTRONIX 2.0 (Bootstrap + Backend)</title>
     
-    <!-- BOOTSTRAP 5 + ICONS + FONTS – O(1) LAYOUT -->
+    <!-- BOOTSTRAP 5 + ICONS + FONTS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome (for some icons, but we mostly use bi) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -144,15 +143,14 @@
             transition: 0.3s; box-shadow: 0 0 20px rgba(255,51,102,0.3);
         }
         .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,51,102,0.5); }
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
         .error-message { color: #ff3366; font-size: 0.85rem; display: none; margin-top: 5px; }
         .error-message.show { display: block; }
         .form-input.error { border-color: #ff3366; box-shadow: 0 0 10px rgba(255,51,102,0.3); }
         .form-input.success { border-color: #33ff66; box-shadow: 0 0 10px rgba(51,255,102,0.3); }
-        .success-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 10000; animation: fadeIn 0.5s;
-        }
         .footer-3d { border-top: 2px solid #ff4733; background: #000; padding: 2rem 0; margin-top: auto; }
         .social-icon {
             width: 45px; height: 45px; border-radius: 50%; background: rgba(255,71,51,0.2);
@@ -166,6 +164,8 @@
             z-index: 10000; animation: slideIn 0.3s; font-weight: 600; color: white;
         }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+        
         @media (max-width: 768px) {
             .signup-header h1 { font-size: 2rem; }
             .loader-letter { font-size: 2.5rem; }
@@ -173,7 +173,6 @@
         @media (max-width: 576px) {
             .signup-card { padding: 1.8rem; }
         }
-        /* bootstrap overrides */
         .navbar-collapse { flex-grow: 0; }
     </style>
 </head>
@@ -184,7 +183,7 @@
         <div class="video-overlay"></div>
     </div>
 
-    <!-- LOADER – O(1) direct DOM removal after 2.5s -->
+    <!-- LOADER -->
     <div class="loader-container" id="loader">
         <div class="loader-wrapper">
             <span class="loader-letter">F</span><span class="loader-letter">E</span><span class="loader-letter">S</span><span class="loader-letter">T</span>
@@ -195,7 +194,7 @@
         <div class="loader-subtitle">CREATING ACCOUNT</div>
     </div>
 
-    <!-- ===== BOOTSTRAP NAVBAR (FIXED, O(1) LAYOUT) ===== -->
+    <!-- BOOTSTRAP NAVBAR -->
     <nav class="navbar navbar-expand-lg festronix-nav fixed-top px-3">
         <div class="container-fluid">
             <span class="navbar-brand d-lg-none text-warning" style="font-family: Orbitron;">F2.0</span>
@@ -212,7 +211,6 @@
                     <li class="nav-item" id="userAuthContainer"></li>
                 </ul>
             </div>
-            <!-- mobile toggler -->
             <button class="navbar-toggler border-0 p-2" type="button" id="mobileMenuBtn">
                 <i class="fas fa-bars fs-2" style="color: #ffcc33;"></i>
             </button>
@@ -243,7 +241,7 @@
         </div>
     </div>
 
-    <!-- ===== MAIN SIGNUP – BOOTSTRAP GRID O(1) ===== -->
+    <!-- MAIN SIGNUP FORM -->
     <main class="container d-flex align-items-center justify-content-center" style="flex:1; margin-top: 90px; margin-bottom: 30px;">
         <div class="signup-card">
             <div class="signup-header text-center mb-4">
@@ -252,43 +250,42 @@
                 <p class="text-warning">Join FESTRONIX 2.0 Community</p>
             </div>
 
-            <!-- FORM – O(1) direct validation -->
             <form id="signupForm">
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-label"><i class="fas fa-user me-2"></i>FIRST NAME</label>
-                        <input type="text" class="form-input" id="firstName" placeholder="Enter first name" autocomplete="given-name">
+                        <input type="text" class="form-input" id="firstName" placeholder="Enter first name" autocomplete="given-name" required>
                         <div class="error-message" id="firstNameError"></div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label"><i class="fas fa-user me-2"></i>LAST NAME</label>
-                        <input type="text" class="form-input" id="lastName" placeholder="Enter last name" autocomplete="family-name">
+                        <input type="text" class="form-input" id="lastName" placeholder="Enter last name" autocomplete="family-name" required>
                         <div class="error-message" id="lastNameError"></div>
                     </div>
                 </div>
 
                 <div class="mb-3 position-relative">
                     <label class="form-label"><i class="fas fa-mobile-alt me-2"></i>MOBILE NUMBER</label>
-                    <input type="tel" class="form-input" id="mobile" placeholder="Enter 10-digit mobile number" autocomplete="tel">
+                    <input type="tel" class="form-input" id="mobile" placeholder="Enter 10-digit mobile number" autocomplete="tel" required>
                     <div class="error-message" id="mobileError"></div>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label"><i class="fas fa-envelope me-2"></i>EMAIL ID</label>
-                    <input type="email" class="form-input" id="email" placeholder="Enter email address" autocomplete="email">
+                    <input type="email" class="form-input" id="email" placeholder="Enter email address" autocomplete="email" required>
                     <div class="error-message" id="emailError"></div>
                 </div>
 
                 <div class="mb-3 position-relative">
                     <label class="form-label"><i class="fas fa-lock me-2"></i>CREATE PASSWORD</label>
-                    <input type="password" class="form-input" id="password" placeholder="Min 6 characters" autocomplete="new-password">
+                    <input type="password" class="form-input" id="password" placeholder="Min 6 characters" autocomplete="new-password" required>
                     <button type="button" class="password-toggle" id="passwordToggle"><i class="fas fa-eye"></i></button>
                     <div class="error-message" id="passwordError"></div>
                 </div>
 
                 <div class="mb-4 position-relative">
                     <label class="form-label"><i class="fas fa-lock me-2"></i>CONFIRM PASSWORD</label>
-                    <input type="password" class="form-input" id="confirmPassword" placeholder="Confirm password" autocomplete="new-password">
+                    <input type="password" class="form-input" id="confirmPassword" placeholder="Confirm password" autocomplete="new-password" required>
                     <button type="button" class="password-toggle" id="confirmPasswordToggle"><i class="fas fa-eye"></i></button>
                     <div class="error-message" id="confirmPasswordError"></div>
                 </div>
@@ -305,7 +302,7 @@
         </div>
     </main>
 
-    <!-- FOOTER (bootstrap row) -->
+    <!-- FOOTER -->
     <footer class="footer-3d">
         <div class="container">
             <div class="row align-items-center">
@@ -335,125 +332,185 @@
         </div>
     </footer>
 
-    <!-- SCRIPTS: Bootstrap + O(1) constant-time signup logic -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- SIGNUP SCRIPT – CONNECTED TO BACKEND -->
     <script>
+        (function () {
+            "use strict";
 
-(function () {
-    "use strict";
+            // --- BACKEND CONFIGURATION ---
+            const API_URL = "https://sumitfest.onrender.com/api/auth/signup";
 
-    /* ================= LOADER ================= */
-    window.addEventListener("load", () => {
-        setTimeout(() => {
-            document.getElementById("loader")?.classList.add("loader-hidden");
-        }, 2500);
-    });
+            /* ================= LOADER ================= */
+            window.addEventListener("load", () => {
+                setTimeout(() => {
+                    document.getElementById("loader")?.classList.add("loader-hidden");
+                }, 1500);
+            });
 
-    /* ================= NOTIFICATION ================= */
-    window.showNotification = function (msg, type = "success") {
-        document.querySelector(".notification")?.remove();
-        const n = document.createElement("div");
-        n.className = `notification notification-${type}`;
-        n.innerHTML = msg;
-        document.body.appendChild(n);
-        setTimeout(() => n.remove(), 3000);
-    };
-
-    /* ================= LOGOUT ================= */
-    function logout() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        window.location.href = "index.html";
-    }
-
-    /* ================= AUTH UI ================= */
-    function updateUserAuthDisplay() {
-        const container = document.getElementById("userAuthContainer");
-        const mobileAuth = document.getElementById("mobileAuthButtons");
-        const user = JSON.parse(localStorage.getItem("user"));
-
-        if (!container || !mobileAuth) return;
-
-        if (user) {
-            container.innerHTML = `
-                <a href="profile.html" class="nav-link">
-                    <i class="fas fa-user"></i> ${user.firstName}
-                </a>`;
-            mobileAuth.innerHTML = `
-                <a href="profile.html" class="btn btn-outline-warning w-100 mb-2">Profile</a>
-                <button id="logoutBtn" class="btn btn-outline-danger w-100">Logout</button>`;
-            document.getElementById("logoutBtn").onclick = logout;
-        } else {
-            container.innerHTML = `<a href="signup.html" class="nav-link">Signup</a>`;
-            mobileAuth.innerHTML = `
-                <a href="login.html" class="btn btn-outline-warning w-100 mb-2">Login</a>
-                <a href="signup.html" class="btn btn-warning w-100">Signup</a>`;
-        }
-    }
-
-    /* ================= MOBILE MENU ================= */
-    function initMobileMenu() {
-        const btn = document.getElementById("mobileMenuBtn");
-        const overlay = document.getElementById("mobileNavOverlay");
-        const close = document.getElementById("mobileCloseBtn");
-        if (!btn || !overlay || !close) return;
-
-        const toggle = () => overlay.classList.toggle("show");
-        btn.onclick = toggle;
-        close.onclick = toggle;
-        overlay.onclick = e => e.target === overlay && toggle();
-    }
-
-    /* ================= SIGNUP ================= */
-    document.addEventListener("DOMContentLoaded", () => {
-        updateUserAuthDisplay();
-        initMobileMenu();
-
-        const form = document.getElementById("signupForm");
-        if (!form) return;
-
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const data = {
-                firstName: firstName.value.trim(),
-                lastName: lastName.value.trim(),
-                mobile: mobile.value.trim(),
-                email: email.value.trim().toLowerCase(),
-                password: password.value.trim()
+            /* ================= NOTIFICATION SYSTEM ================= */
+            const NOTIFICATION_STYLES = {
+                success: 'linear-gradient(145deg, #00cc66, #009933)',
+                error: 'linear-gradient(145deg, #ff3333, #cc0000)',
+                info: 'linear-gradient(145deg, #3366ff, #0044cc)'
             };
 
-            if (!Object.values(data).every(Boolean)) {
-                showNotification("All fields required", "error");
-                return;
-            }
+            window.showNotification = function (msg, type = "success") {
+                const existing = document.querySelector('.notification');
+                if(existing) existing.remove();
+                
+                const n = document.createElement("div");
+                n.className = "notification";
+                n.style.background = NOTIFICATION_STYLES[type] || NOTIFICATION_STYLES.success;
+                n.style.borderLeft = "5px solid #ffcc33";
+                n.innerHTML = `
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+                    <span>${msg}</span>
+                `;
+                document.body.appendChild(n);
+                
+                setTimeout(() => {
+                    n.style.animation = 'slideOut 0.3s ease forwards';
+                    setTimeout(() => n.remove(), 300);
+                }, 4000);
+            };
 
-            try {
-                const res = await fetch("http://localhost:5000/api/auth/signup", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
+            /* ================= PASSWORD TOGGLE ================= */
+            function initPasswordToggles() {
+                const toggles = [
+                    { btn: 'passwordToggle', input: 'password' },
+                    { btn: 'confirmPasswordToggle', input: 'confirmPassword' }
+                ];
+                
+                toggles.forEach(t => {
+                    const btn = document.getElementById(t.btn);
+                    const input = document.getElementById(t.input);
+                    if (btn && input) {
+                        btn.addEventListener('click', () => {
+                            const type = input.type === 'password' ? 'text' : 'password';
+                            input.type = type;
+                            btn.innerHTML = `<i class="fas fa-${type === 'password' ? 'eye' : 'eye-slash'}"></i>`;
+                        });
+                    }
                 });
-
-                const result = await res.json();
-                if (!res.ok) {
-                    showNotification(result.msg || "Signup failed", "error");
-                    return;
-                }
-
-                localStorage.setItem("token", result.token);
-                localStorage.setItem("user", JSON.stringify(result.user));
-
-                showNotification("Signup successful!", "success");
-                setTimeout(() => window.location.href = "index.html", 1500);
-
-            } catch (err) {
-                showNotification("Server error", "error");
             }
-        });
-    });
 
-})();
-</script>
+            /* ================= SIGNUP LOGIC (CONNECTED TO BACKEND) ================= */
+            async function handleSignup(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.getElementById('submitBtn');
+                const originalBtnText = submitBtn.innerHTML;
+                
+                // 1. Get Values
+                const formData = {
+                    firstName: document.getElementById('firstName').value.trim(),
+                    lastName: document.getElementById('lastName').value.trim(),
+                    mobile: document.getElementById('mobile').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    password: document.getElementById('password').value,
+                    confirmPassword: document.getElementById('confirmPassword').value
+                };
+
+                // 2. Basic Validation
+                if (!formData.firstName || !formData.lastName) return showNotification('Name is required', 'error');
+                if (!formData.email.includes('@')) return showNotification('Invalid email', 'error');
+                if (formData.password.length < 6) return showNotification('Password must be at least 6 chars', 'error');
+                if (formData.password !== formData.confirmPassword) return showNotification('Passwords do not match', 'error');
+
+                // 3. Send to Server
+                try {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> CREATING...';
+
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            firstName: formData.firstName,
+                            lastName: formData.lastName,
+                            email: formData.email,
+                            password: formData.password,
+                            mobile: formData.mobile
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        showNotification('🎉 Account created! Redirecting to login...', 'success');
+                        setTimeout(() => window.location.href = 'login.html', 2000);
+                    } else {
+                        showNotification(data.message || 'Signup failed', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showNotification('Server error. Please try again later.', 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                }
+            }
+
+            /* ================= AUTH UI (minimal) ================= */
+            function updateUserAuthDisplay() {
+                // This page is signup, so we just show the signup button as active
+                const container = document.getElementById("userAuthContainer");
+                if (container) {
+                    container.innerHTML = `<a href="signup.html" class="nav-link nav-link-custom active"><i class="fas fa-user-plus"></i> Signup</a>`;
+                }
+                
+                // Mobile auth buttons
+                const mobileAuth = document.getElementById("mobileAuthButtons");
+                if (mobileAuth) {
+                    mobileAuth.innerHTML = `
+                        <a href="login.html" class="btn btn-outline-warning w-100 mb-2">Login</a>
+                        <a href="signup.html" class="btn btn-warning w-100">Signup</a>`;
+                }
+                
+                // Mobile user info
+                const mobileUserName = document.getElementById('mobileUserName');
+                const mobileUserEmail = document.getElementById('mobileUserEmail');
+                if (mobileUserName) mobileUserName.innerText = 'Guest';
+                if (mobileUserEmail) mobileUserEmail.innerText = 'Not logged in';
+            }
+
+            /* ================= MOBILE MENU ================= */
+            function initMobileMenu() {
+                const btn = document.getElementById("mobileMenuBtn");
+                const overlay = document.getElementById("mobileNavOverlay");
+                const close = document.getElementById("mobileCloseBtn");
+                if (!btn || !overlay || !close) return;
+
+                const toggle = () => overlay.classList.toggle("show");
+                btn.onclick = toggle;
+                close.onclick = toggle;
+                overlay.onclick = e => e.target === overlay && toggle();
+            }
+
+            /* ================= INITIALIZATION ================= */
+            document.addEventListener("DOMContentLoaded", () => {
+                initPasswordToggles();
+                updateUserAuthDisplay();
+                initMobileMenu();
+                
+                // Set active nav
+                document.querySelectorAll('.nav-link-custom').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === 'signup.html') {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Attach signup handler
+                const form = document.getElementById("signupForm");
+                if (form) {
+                    form.addEventListener("submit", handleSignup);
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
