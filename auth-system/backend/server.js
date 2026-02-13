@@ -43,11 +43,13 @@ const User = mongoose.model("User", userSchema);
 
 // ================= EMAIL CONFIG =================
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com", // Direct host is better than 'service: gmail' on Render
+  port: 465,              // Port 465 is secure and works on Render
+  secure: true,           // Must be true for port 465
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
+    pass: process.env.EMAIL_PASS,
+  },
 });
 
 transporter.verify(err => {
