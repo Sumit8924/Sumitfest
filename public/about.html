@@ -41,32 +41,37 @@
             cursor: none; /* custom cursor active */
         }
 
-        /* ----- Video Background ----- */
+ /* Video Background */
         .video-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: -1;
             overflow: hidden;
         }
+
         .video-background video {
             position: absolute;
             top: 50%;
             left: 50%;
+            transform: translate(-50%, -50%);
             min-width: 100%;
             min-height: 100%;
-            transform: translate(-50%, -50%);
+            width: auto;
+            height: auto;
             object-fit: cover;
+            opacity: 0.6;
         }
+
         .video-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.75);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%);
         }
 
         /* ----- Particles (static effect) ----- */
@@ -128,53 +133,121 @@
             z-index: 1031;
         }
 
-        /* ----- BOOTSTRAP NAVBAR (NEON STYLE) ----- */
+        /* ===== UPDATED NAVBAR STYLES - MATCHING INDEX.HTML ===== */
         .navbar {
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(10px);
+            background: transparent;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-bottom: 2px solid #ff4733;
+            min-height: 70px;
+            z-index: 100;
             padding: 0 1rem;
-            min-height: 70px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            z-index: 1030;
         }
-        .navbar-nav {
-            width: 100%;
-            justify-content: center;
-            align-items: center;
+
+        /* Desktop: Center Nav Items */
+        @media (min-width: 992px) {
+            .navbar-nav {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+            }
         }
+
         .nav-link {
-            color: #fff !important;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            letter-spacing: 0.1rem;
-            padding: 0 0.8rem !important;
-            min-height: 70px;
+            color: white !important;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 1rem 2rem !important;
+            font-size: 1.25rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            white-space: nowrap;
+            border-radius: 10px;
             display: flex;
             align-items: center;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
         }
+
         .nav-link i {
-            margin-right: 6px;
+            margin-right: 8px;
             font-size: 1.1rem;
         }
-        .nav-link:hover {
-            color: #ffcc33 !important;
-            background: rgba(255,71,51,0.15);
-            transform: translateY(-2px);
+
+        .nav-link:hover { 
+            color: #ffcc33 !important; 
+            background: rgba(255, 71, 51, 0.15); 
+            transform: translateY(-5px); 
+            box-shadow: 0 5px 15px rgba(255, 71, 51, 0.3); 
         }
-        .nav-link.active {
-            color: #ffcc33 !important;
-            background: rgba(255,71,51,0.25);
-            border-bottom: 3px solid #ff4733 !important;
+
+        .nav-link.active { 
+            color: #ffcc33 !important; 
+            border-bottom: 4px solid #ffcc33;
         }
+
+        .user-auth-container {
+            margin-left: 20px;
+        }
+
+        /* Navbar Toggler Style */
         .navbar-toggler {
-            border: 1px solid rgba(255,204,51,0.5) !important;
-            background: transparent !important;
+            border: 2px solid #ff4733 !important;
+            background: rgba(255, 71, 51, 0.2) !important;
+            padding: 0.5rem 0.75rem;
         }
+        
         .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 204, 51, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 71, 51, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 71, 51, 0.25);
+        }
+
+        /* Mobile menu transparency */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: transparent !important;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                padding: 1rem;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border-bottom: 2px solid #ff4733;
+            }
+            
+            .navbar-nav {
+                background: transparent;
+                margin: 0;
+            }
+            
+            .nav-link {
+                min-height: 50px;
+                padding: 0.8rem 1rem !important;
+                text-align: center;
+                background: rgba(0, 0, 0, 0.4);
+                margin: 4px 0;
+                border-radius: 8px;
+                border: 1px solid rgba(255, 71, 51, 0.3);
+                font-size: 1rem;
+            }
+            
+            .nav-link:hover {
+                background: rgba(255, 71, 51, 0.3);
+            }
+            
+            .nav-link.active {
+                background: rgba(255, 71, 51, 0.4);
+                border-bottom: 4px solid #ffcc33 !important;
+            }
+
+            .user-auth-container {
+                margin-left: 0;
+                margin-top: 5px;
+            }
         }
 
         /* ----- User Auth Button (Desktop) ----- */
@@ -183,13 +256,15 @@
             align-items: center;
             justify-content: center;
             background: rgba(255,71,51,0.3);
+            border: 2px solid #ff4733;
             color: white;
-            font-weight: 600;
-            padding: 0 15px;
-            min-height: 70px;
+            font-weight: 700;
+            padding: 0 20px;
+            min-height: 50px;
             text-decoration: none;
             transition: all 0.3s;
-            border-bottom: 3px solid transparent;
+            border-radius: 10px;
+            white-space: nowrap;
         }
         .user-auth-btn:hover {
             color: #ffcc33;
@@ -200,16 +275,17 @@
 
         /* ----- Mobile Auth Extra (placed inside collapse) ----- */
         .mobile-auth-extra {
-            background: #000;
+            background: transparent;
             border-top: 1px solid #ff4733;
             padding: 1rem;
+            margin-top: 10px;
         }
         .mobile-profile-btn, .mobile-login-btn, .mobile-signup-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 600;
             text-decoration: none;
             width: 100%;
@@ -301,9 +377,9 @@
 
         /* ----- College Info Cards (Bootstrap enhanced) ----- */
         .college-logo {
-            width: 220px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px rgba(51,102,255,0.5));
+            width: 420px;
+            margin-bottom: 60px;
+            filter: drop-shadow(0 0 15px rgb(126, 126, 128));
         }
         .college-name {
             font-family: 'Orbitron', sans-serif;
@@ -486,7 +562,7 @@
             box-shadow: 0 0 30px rgba(255,71,51,0.8);
         }
 
-        /* ----- Loader ----- */
+        /* ----- Loader (Matching index.html style) ----- */
         .loader-container {
             position: fixed;
             top: 0;
@@ -500,21 +576,26 @@
             align-items: center;
             transition: opacity 0.5s;
         }
-        .loader-hidden { opacity: 0; pointer-events: none; }
+        .loader-hidden { opacity: 0; pointer-events: none; visibility: hidden; }
         .loader-letter {
             font-family: 'Orbitron';
             font-size: 2rem;
             color: #ff4733;
             margin: 0 5px;
             animation: bounce 1s infinite;
+            display: inline-block;
         }
-        @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes bounce { 
+            0%,100% { transform: translateY(0); } 
+            50% { transform: translateY(-20px); } 
+        }
 
         /* ----- Responsive Adjustments ----- */
         @media (max-width: 991px) {
-            .navbar .navbar-nav .nav-link { min-height: 50px; padding: 0.8rem 1rem !important; }
-            .hero-title { font-size: 3rem; }
             .scroll-indicator { top: 0; }
+            .navbar-nav {
+                gap: 0;
+            }
         }
         @media (max-width: 767px) {
             .hero-section { padding-top: 100px; }
@@ -542,18 +623,18 @@
     <!-- LOADER -->
     <div class="loader-container" id="loader">
         <div class="d-flex">
-            <span class="loader-letter">A</span>
-            <span class="loader-letter">B</span>
-            <span class="loader-letter">O</span>
-            <span class="loader-letter">U</span>
-            <span class="loader-letter">T</span>
+            <span class="loader-letter" style="animation-delay: 0s">A</span>
+            <span class="loader-letter" style="animation-delay: 0.1s">B</span>
+            <span class="loader-letter" style="animation-delay: 0.2s">O</span>
+            <span class="loader-letter" style="animation-delay: 0.3s">U</span>
+            <span class="loader-letter" style="animation-delay: 0.4s">T</span>
         </div>
     </div>
 
     <!-- VIDEO BACKGROUND -->
     <div class="video-background">
         <video autoplay muted loop playsinline>
-            <source src="light.mp4" type="video/mp4">
+            <source src="https://res.cloudinary.com/dpc4l1hic/video/upload/v1770814312/light_gzuewo.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
     </div>
@@ -568,19 +649,20 @@
     <!-- SCROLL INDICATOR -->
     <div class="scroll-indicator"></div>
 
-    <!-- ========== BOOTSTRAP STICKY NAVIGATION ========== -->
+    <!-- ========== UPDATED NAVIGATION - MATCHING INDEX.HTML STYLE ========== -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid px-lg-4">
             <a class="navbar-brand d-lg-none text-warning fw-bold" href="#">FESTRONIX</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#festronixNavbar">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#festronixNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="festronixNavbar">
-                <ul class="navbar-nav w-100 justify-content-center">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-100 justify-content-center">
                     <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="previous.html"><i class="fas fa-history"></i> Previous</a></li>
                     <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" href="events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sponsors.html"><i class="fas fa-handshake"></i> Sponsors</a></li>
                     <li class="nav-item"><a class="nav-link active" href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
                     <li class="nav-item"><a class="nav-link" href="team.html"><i class="fas fa-users"></i> Team</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
@@ -603,7 +685,7 @@
     <!-- HERO SECTION -->
     <section class="hero-section">
         <div class="container">
-            <img src="Fest4.png" alt="FESTRONIX 2.0 Logo" class="hero-logo img-fluid">
+            <img src="https://res.cloudinary.com/dpc4l1hic/image/upload/v1771088331/Untitled_design_1_kwxvjb.png" alt="FESTRONIX 2.0 Logo" class="hero-logo img-fluid">
             <h1 class="hero-title">FESTRONIX 2.0</h1>
             <h2 class="hero-subtitle">The Annual Technical Fest</h2>
             <p class="hero-tagline">
@@ -620,7 +702,7 @@
             <h2 class="section-title">About GIFT Autonomous College</h2>
             <div class="row align-items-center g-5">
                 <div class="col-lg-5 text-center">
-                    <img src="gift logo.png" alt="GIFT Autonomous College Logo" class="college-logo img-fluid">
+                    <img src="https://res.cloudinary.com/dpc4l1hic/image/upload/v1771088344/Untitled_design_2_c4dlqf.png" alt="GIFT Autonomous College Logo" class="college-logo img-fluid">
                     <h3 class="college-name">GIFT AUTONOMOUS</h3>
                     <p class="text-warning">Igniting Minds, Empowering Futures</p>
                 </div>
@@ -698,7 +780,7 @@
             <div class="row g-4">
                 <div class="col-lg-6">
                     <div class="d-flex align-items-center gap-3 mb-3">
-                        <img src="gift logo.png" alt="GIFT Autonomous College Logo" class="college-logo-footer">
+                        <img src="https://res.cloudinary.com/dpc4l1hic/image/upload/v1771088344/Untitled_design_2_c4dlqf.png" alt="GIFT Autonomous College Logo" class="college-logo-footer">
                         <div class="college-name-footer">GIFT AUTONOMOUS<br><span class="fs-6">BHUBANESWAR</span></div>
                     </div>
                     <p class="footer-tagline">Igniting Minds, Empowering Futures</p>
@@ -727,21 +809,32 @@
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- BOOTSTRAP-IFIED SCRIPT (ALL FEATURES PRESERVED) -->
+    <!-- UPDATED SCRIPT - MATCHING INDEX.HTML FUNCTIONALITY -->
     <script>
         (function() {
             'use strict';
 
+            // ==================== DOM CACHE ====================
+            const DOM = {
+                loader: document.getElementById('loader'),
+                days: document.getElementById('mainDays'),
+                hours: document.getElementById('mainHours'),
+                minutes: document.getElementById('mainMinutes'),
+                seconds: document.getElementById('mainSeconds'),
+                slider: document.getElementById('slider'),
+                welcomeTitle: document.getElementById('welcomeTitle'),
+                userAuthContainer: document.getElementById('userAuthContainer'),
+                promoVideo: document.getElementById('promoVideo'),
+                promoMuteBtn: document.getElementById('promoMuteBtn'),
+                desktopVideo: document.getElementById('desktopVideo'),
+                mobileVideo: document.getElementById('mobileVideo')
+            };
+
             // ==================== LOADER ====================
-            window.addEventListener('load', () => {
+            window.addEventListener('load', function() {
                 setTimeout(() => {
-                    const loader = document.getElementById('loader');
-                    if (loader) loader.style.opacity = '0';
+                    if (DOM.loader) DOM.loader.classList.add('loader-hidden');
                 }, 1000);
-                setTimeout(() => {
-                    const loader = document.getElementById('loader');
-                    if (loader) loader.style.display = 'none';
-                }, 1500);
             });
 
             // ==================== MOBILE MENU (Bootstrap handles collapse, but we need to move mobileAuthExtra) ====================
@@ -832,8 +925,6 @@
             function updateUserAuthDisplay() {
                 const container = document.getElementById('userAuthContainer');
                 const mobileAuth = document.getElementById('mobileAuthButtons');
-                const mobileUserName = document.getElementById('mobileUserName');
-                const mobileUserEmail = document.getElementById('mobileUserEmail');
                 const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
                 let htmlContent = '', mobileHtmlContent = '';
@@ -842,13 +933,9 @@
                     const user = JSON.parse(localStorage.getItem('userData') || '{}');
                     htmlContent = `<a class="user-auth-btn" id="userAuthBtn" href="#"><i class="fas fa-user"></i><span id="userAuthText">${user.firstName || 'User'}</span></a>`;
                     mobileHtmlContent = `<a href="profile.html" class="mobile-profile-btn w-100 mb-2"><i class="fas fa-user me-2"></i> Profile</a><a href="#" class="mobile-login-btn w-100" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>`;
-                    if (mobileUserName) mobileUserName.innerText = user.firstName || 'User';
-                    if (mobileUserEmail) mobileUserEmail.innerText = user.email || '';
                 } else {
                     htmlContent = `<a class="user-auth-btn" href="signup.html"><i class="fas fa-user-plus"></i><span>Signup</span></a>`;
                     mobileHtmlContent = `<a href="login.html" class="mobile-login-btn w-100 mb-2"><i class="fas fa-sign-in-alt me-2"></i> Login</a><a href="signup.html" class="mobile-signup-btn w-100"><i class="fas fa-user-plus me-2"></i> Sign Up</a>`;
-                    if (mobileUserName) mobileUserName.innerText = 'Guest';
-                    if (mobileUserEmail) mobileUserEmail.innerText = 'Not logged in';
                 }
                 if (container) container.innerHTML = htmlContent;
                 if (mobileAuth) mobileAuth.innerHTML = mobileHtmlContent;
@@ -912,7 +999,7 @@
 
             // ==================== SET ACTIVE NAVIGATION ====================
             function setActiveNavItem() {
-                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                const currentPage = window.location.pathname.split('/').pop() || 'about.html';
                 document.querySelectorAll('.nav-link').forEach(link => {
                     const href = link.getAttribute('href');
                     if (href === currentPage) link.classList.add('active');
@@ -922,7 +1009,7 @@
 
             // ==================== VIDEO PLAY FALLBACK ====================
             function initVideo() {
-                const video = document.querySelector('video');
+                const video = document.querySelector('.video-background video');
                 if (video) video.play().catch(e => console.log('Autoplay blocked'));
             }
 

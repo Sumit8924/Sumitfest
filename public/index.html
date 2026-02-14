@@ -112,11 +112,163 @@
             position: relative;
             z-index: 200;
         }
-        .main-timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 700px; margin: 0 auto; }
-        .main-timer-box { background: rgba(0,0,0,0.7); border: 2px solid #931909; border-radius: 12px; padding: 15px 5px; backdrop-filter: blur(10px); }
-        .main-timer-value { font-size: 2.5rem; font-weight: 900; color: #33ccff; font-family: 'Orbitron', sans-serif; line-height: 1; }
-        .main-timer-content { pointer-events: auto; }
-        
+
+        /* ===== REGISTRATION TITLE STYLING WITH COLOR ===== */
+        .main-timer-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            
+            /* Gradient text effect */
+            background: linear-gradient(135deg, #ff3333, #ffcc33, #66e0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            
+            /* Neon glow effect */
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.5),
+                        0 0 20px rgba(51, 61, 255, 0.3);
+            
+            /* Optional animation */
+            animation: titlePulse 3s infinite ease-in-out;
+        }
+
+        /* Alternative: Solid color option (if you prefer solid instead of gradient) */
+        .main-timer-title.solid-color {
+            color: #ffcc33;  /* Solid gold/yellow */
+            text-shadow: 0 0 10px #ff3333,
+                        0 0 20px #ff9966;
+        }
+
+        /* Icon styling within the title */
+        .main-timer-title i {
+            color: #ff3333;
+            margin-right: 10px;
+            text-shadow: 0 0 10px #ff3333,
+                        0 0 20px #ff3333;
+            animation: iconPulse 2s infinite;
+        }
+
+        /* Title animation */
+        @keyframes titlePulse {
+            0% {
+                text-shadow: 0 0 10px rgba(255, 51, 51, 0.5),
+                            0 0 20px rgba(255, 204, 51, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(255, 51, 51, 0.8),
+                            0 0 30px rgba(255, 204, 51, 0.6),
+                            0 0 45px rgba(255, 153, 102, 0.4);
+            }
+            100% {
+                text-shadow: 0 0 10px rgba(255, 51, 51, 0.5),
+                            0 0 20px rgba(255, 204, 51, 0.3);
+            }
+        }
+
+        /* Icon pulse animation */
+        @keyframes iconPulse {
+            0%, 100% {
+                transform: scale(1);
+                text-shadow: 0 0 10px #ff3333;
+            }
+            50% {
+                transform: scale(1.1);
+                text-shadow: 0 0 20px #ff3333,
+                            0 0 30px #ff9966;
+            }
+        }
+
+        .main-timer-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 15px; 
+            max-width: 700px; 
+            margin: 0 auto; 
+        }
+        .main-timer-box { 
+            background: rgba(0, 0, 0, 0); 
+            border: 2px solid #ff3333;
+            border-radius: 12px; 
+            padding: 15px 5px; 
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 10px #ff3333,
+                        0 0 20px #ff3333,
+                        0 0 30px #ff3333,
+                        inset 0 0 10px #ff3333;
+            animation: redPulse 2s infinite ease-in-out;
+        }
+        .main-timer-value { 
+            font-size: 3.5rem; 
+            font-weight: 900; 
+            color: #049fff;
+            font-family: 'Orbitron', sans-serif; 
+            line-height: 1;
+            text-shadow: 0 0 5px #af840f,
+                        0 0 10px #6eca2c,
+                        0 0 20px #fff,
+                        0 0 40px #fa1313;
+            animation: whitePulse 2s infinite ease-in-out;
+        }
+        .main-timer-content { 
+            pointer-events: auto; 
+        }
+
+        /* Label text styling */
+        .main-timer-label {
+            color: #51d0d2;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px #fff,
+                        0 0 10px #fff;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Animations */
+        @keyframes redPulse {
+            0% {
+                box-shadow: 0 0 5px #ff3333,
+                            0 0 10px #ff3333,
+                            0 0 15px #ff3333,
+                            inset 0 0 5px #ff3333;
+            }
+            50% {
+                box-shadow: 0 0 10px #ff3333,
+                            0 0 20px #ff3333,
+                            0 0 30px #ff3333,
+                            inset 0 0 10px #ff3333;
+            }
+            100% {
+                box-shadow: 0 0 5px #ff3333,
+                            0 0 10px #ff3333,
+                            0 0 15px #ff3333,
+                            inset 0 0 5px #ff3333;
+            }
+        }
+
+        @keyframes whitePulse {
+            0% {
+                text-shadow: 0 0 5px #fff,
+                            0 0 10px #fff,
+                            0 0 15px #fff;
+            }
+            50% {
+                text-shadow: 0 0 10px #fff,
+                            0 0 20px #fff,
+                            0 0 30px #fff,
+                            0 0 40px #fff;
+            }
+            100% {
+                text-shadow: 0 0 5px #fff,
+                            0 0 10px #fff,
+                            0 0 15px #fff;
+            }
+        }
+
         .ui-container {
             position: relative;
             z-index: 50;
@@ -126,20 +278,205 @@
 
         /* LOGO STYLING */
         .logo-container {
-            margin-bottom: 20px;
+            margin-top: -300px;
             display: flex;
             justify-content: center;
             width: 100%;
         }
         .fest-logo {
-            width: 500px; 
+            width: 1000px; 
             max-width: 80vw; 
             height: auto; 
             filter: drop-shadow(0 0 25px rgba(255,0,0,0.6));
         }
 
         #welcomeTitle {
+            position: relative;
+            top: -400px;
             margin-bottom: 20px;
+        }
+
+        /* ===== MOBILE RESPONSIVE STYLES ===== */
+        @media screen and (max-width: 768px) {
+            /* Timer Section */
+            .main-timer-section {
+                margin: 80px auto 20px;
+            }
+            
+            .main-timer-title {
+                font-size: 1.4rem;  /* Smaller on mobile */
+                letter-spacing: 2px;
+            }
+            
+            .main-timer-grid {
+                gap: 8px;
+            }
+            
+            .main-timer-box {
+                padding: 10px 3px;
+                border-width: 1px;
+            }
+            
+            .main-timer-value {
+                font-size: 2rem;
+            }
+            
+            .main-timer-label {
+                font-size: 0.7rem;
+                letter-spacing: 0.5px;
+            }
+            
+            .logo-container {
+                margin-top: -150px;
+            }
+            
+            .fest-logo {
+                width: 600px;
+                max-width: 70vw;
+            }
+            
+            #welcomeTitle {
+                top: -200px;
+                margin-bottom: 10px;
+            }
+            
+            #welcomeTitle h1 {
+                font-size: 1.8rem !important;
+            }
+            
+            #welcomeTitle h2 {
+                font-size: 1rem !important;
+            }
+        }
+
+        /* Small phones (portrait) */
+        @media screen and (max-width: 480px) {
+            .main-timer-section {
+                margin: 60px auto 15px;
+            }
+            
+            .main-timer-title {
+                font-size: 1.2rem;
+                letter-spacing: 1px;
+            }
+            
+            .main-timer-grid {
+                gap: 5px;
+            }
+            
+            .main-timer-box {
+                padding: 8px 2px;
+            }
+            
+            .main-timer-value {
+                font-size: 1.5rem;
+            }
+            
+            .main-timer-label {
+                font-size: 0.6rem;
+            }
+            
+            .logo-container {
+                margin-top: -100px;
+            }
+            
+            .fest-logo {
+                width: 400px;
+                max-width: 80vw;
+            }
+            
+            #welcomeTitle {
+                top: -150px;
+            }
+            
+            #welcomeTitle h1 {
+                font-size: 2rem !important;
+            }
+            
+            #welcomeTitle h2 {
+                font-size: 1rem !important;
+            }
+        }
+
+        /* Extra small phones */
+        @media screen and (max-width: 360px) {
+            .main-timer-title {
+                font-size: 1rem;
+            }
+            
+            .main-timer-value {
+                font-size: 1.2rem;
+            }
+            
+            .main-timer-label {
+                font-size: 0.5rem;
+            }
+            
+            .logo-container {
+                margin-top: -80px;
+            }
+            
+            #welcomeTitle {
+                top: -120px;
+            }
+        }
+
+        /* Landscape mode on mobile */
+        @media screen and (max-width: 768px) and (orientation: landscape) {
+            .main-timer-section {
+                margin: 40px auto 10px;
+            }
+            
+            .main-timer-title {
+                font-size: 1.2rem;
+            }
+            
+            .main-timer-grid {
+                max-width: 500px;
+            }
+            
+            .main-timer-value {
+                font-size: 1.8rem;
+            }
+            
+            .logo-container {
+                margin-top: -100px;
+            }
+            
+            .fest-logo {
+                width: 400px;
+            }
+            
+            #welcomeTitle {
+                top: -150px;
+            }
+        }
+
+        /* Tablet devices */
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .main-timer-section {
+                margin: 100px auto 30px;
+            }
+            
+            .main-timer-title {
+                font-size: 1.6rem;
+            }
+            
+            .main-timer-value {
+                font-size: 2.8rem;
+            }
+            
+            .logo-container {
+                margin-top: -200px;
+            }
+            
+            .fest-logo {
+                width: 800px;
+            }
+            
+            #welcomeTitle {
+                top: -300px;
+            }
         }
 
         /* 3D SLIDER */
@@ -231,6 +568,116 @@
         .slider-btn:hover {
             background: #ff4733;
             transform: scale(1.1);
+        }
+
+        /* ===== MOBILE RESPONSIVE ADJUSTMENTS ===== */
+
+        /* Tablets and large phones */
+        @media screen and (max-width: 768px) {
+            .scene {
+                height: 30vh;  /* Slightly smaller height */
+                margin-top: -150px;  /* Move the entire slider UP by 20px */
+            }
+            
+            .slider {
+                bottom: 100px;  /* Adjusted bottom position */
+            }
+            
+            .card {
+                width: 180px;  /* Smaller cards on mobile */
+                height: 220px;
+                bottom: 10%;  /* Adjusted bottom position */
+            }
+            
+            .slider-controls {
+                bottom: 10px;  /* Move controls up */
+                gap: 20px;
+            }
+            
+            .slider-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Small phones */
+        @media screen and (max-width: 480px) {
+            .scene {
+                height: 28vh;
+                margin-top: -150px;  /* Move even higher on small phones */
+            }
+            
+            .slider {
+                bottom: 100px;
+            }
+            
+            .card {
+                width: 200px;  /* Even smaller cards */
+                height: 250px;
+                bottom: 5%;
+            }
+            
+            .slider-controls {
+                bottom: 5px;
+                gap: 15px;
+            }
+            
+            .slider-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Extra small phones */
+        @media screen and (max-width: 360px) {
+            .scene {
+                height: 25vh;
+                margin-top: -40px;  /* Move highest on very small screens */
+            }
+            
+            .slider {
+                bottom: 20px;
+            }
+            
+            .card {
+                width: 110px;
+                height: 150px;
+                bottom: 5%;
+            }
+        }
+
+        /* Landscape mode on mobile */
+        @media screen and (max-width: 768px) and (orientation: landscape) {
+            .scene {
+                height: 45vh;  /* Taller in landscape */
+                margin-top: -15px;
+            }
+            
+            .slider {
+                bottom: 25px;
+            }
+            
+            .card {
+                width: 150px;
+                height: 190px;
+            }
+        }
+
+        /* Alternative: If you want to move just the slider container without affecting height */
+        @media screen and (max-width: 768px) {
+            /* Option 2: Using transform to move up */
+            .scene {
+                transform: translateY(-20px);  /* Moves the entire slider up by 20px */
+            }
+        }
+
+        /* Option 3: Using negative top margin on parent container if scene is inside one */
+        @media screen and (max-width: 768px) {
+            .your-parent-container {
+                margin-top: -30px;  /* Adjust based on your layout */
+            }
         }
 
         /* SIMPLE PROMO VIDEO */
@@ -402,7 +849,7 @@
 
         /* Mobile responsive general */
         @media (max-width: 600px) {
-            .main-timer-section { top: 40px; }
+            .main-timer-section { top: 15px; }
             .main-timer-grid { gap: 5px; }
             .main-timer-box { padding: 6px 3px; }
             .main-timer-value { font-size: 1.4rem; }
@@ -429,18 +876,15 @@
     <div class="loader-container" id="loader">
         <!-- Desktop/Landscape Video -->
         <video autoplay muted playsinline class="loader-video video-desktop" id="desktopVideo">
-            <source src="fest.mp4" type="video/mp4">
+            <source src="https://res.cloudinary.com/dpc4l1hic/video/upload/v1771087889/fest_rfpazl.mp4" type="video/mp4">
             <!-- Replace with your desktop/landscape video -->
         </video>
         
         <!-- Mobile/Portrait Video -->
         <video autoplay muted playsinline class="loader-video video-mobile" id="mobileVideo">
-            <source src="fest1.mp4" type="video/mp4">
+            <source src="https://res.cloudinary.com/dpc4l1hic/video/upload/v1771087971/fest1_mloq2o.mp4" type="video/mp4">
             <!-- Replace with your mobile/portrait video -->
         </video>
-        
-        <!-- Fallback text for older browsers -->
-        Your browser does not support the video tag.
     </div>
 
     <!-- VIDEO BACKGROUND -->
@@ -454,7 +898,7 @@
     <!-- NAVIGATION -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid px-lg-4">
-            <a class="navbar-brand d-lg-none text-warning fw-bold" href="#">FESTRONIX</a>
+            <a class="navbar-brand d-lg-none text-warning fw-bold" href="#"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#festronixNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -468,7 +912,6 @@
                     <li class="nav-item"><a class="nav-link" href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
                     <li class="nav-item"><a class="nav-link" href="team.html"><i class="fas fa-users"></i> Team</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
-                    <li class="nav-item user-auth-container ms-lg-3" id="userAuthContainer"></li>
                 </ul>
             </div>
         </div>
@@ -495,7 +938,7 @@
         </div>
 
         <div class="logo-container text-center">
-            <img src="https://res.cloudinary.com/dpc4l1hic/image/upload/v1770814267/Fest4_vqjy3x.png" alt="FESTRONIX 2.0" class="fest-logo">
+            <img src="https://res.cloudinary.com/dpc4l1hic/image/upload/v1771088331/Untitled_design_1_kwxvjb.png" alt="FESTRONIX 2.0" class="fest-logo">
         </div>
 
         <div class="text-center" id="welcomeTitle"></div>

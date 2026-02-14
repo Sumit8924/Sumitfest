@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>FESTRONIX2.0 – Sponsors (Bootstrap O(1))</title>
-    <!-- BOOTSTRAP 5 CORE (lightning fast, O(1) layout) -->
+    <title>FESTRONIX 2.0 - Sponsors (Bootstrap)</title>
+    <!-- BOOTSTRAP 5 CORE -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- icons + fonts (same as before) -->
+    <!-- icons + fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- tiny extra style – only for custom cursor, colors, slider O(1) -->
+    <!-- custom styles -->
     <style>
-        /* ----- bootstrap reset remains, minimal theme overrides O(1) ----- */
-        * { box-sizing: border-box; }
+        /* ----- bootstrap reset remains, minimal theme overrides ----- */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body {
             background: #000;
             font-family: 'Rajdhani', sans-serif;
@@ -25,7 +26,8 @@
             body, a, button { cursor: auto; } 
             .cursor-dot, .cursor-outline { display: none !important; }
         }
-        /* ----- CUSTOM CURSOR (O(1) animation) ----- */
+
+        /* ----- CUSTOM CURSOR ----- */
         .cursor-dot, .cursor-outline {
             position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
             border-radius: 50%; z-index: 9999; pointer-events: none;
@@ -36,57 +38,196 @@
             transition: width 0.2s, height 0.2s, border-color 0.2s;
         }
 
-        /* ----- navbar fixed – O(1) direct bootstrap classes used in HTML ----- */
-        .festronix-nav {
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(10px);
+        /* ===== UPDATED NAVBAR STYLES - MATCHING INDEX.HTML ===== */
+        .navbar {
+            background: transparent;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-bottom: 2px solid #ff4733;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            min-height: 70px;
+            z-index: 100;
             padding: 0 1rem;
-            height: 70px;
         }
-        .nav-link-custom {
-            color: #fff !important;
-            font-weight: 600;
-            letter-spacing: 0.1rem;
-            padding: 0.5rem 1rem !important;
-            font-family: 'Rajdhani', sans-serif;
-            position: relative;
-            transition: 0.2s;
+
+        /* Desktop: Center Nav Items */
+        @media (min-width: 992px) {
+            .navbar-nav {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+            }
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 1rem 2rem !important;
+            font-size: 1.25rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            white-space: nowrap;
+            border-radius: 10px;
             display: flex;
             align-items: center;
-            gap: 6px;
         }
-        .nav-link-custom i { font-size: 1.1rem; }
-        .nav-link-custom:hover {
-            color: #ffcc33 !important;
-            background: rgba(255,71,51,0.15);
-            transform: translateY(-2px);
+
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 1.1rem;
         }
-        .nav-link-custom.active {
-            color: #ffcc33 !important;
-            background: rgba(255,71,51,0.25);
+
+        .nav-link:hover { 
+            color: #ffcc33 !important; 
+            background: rgba(255, 71, 51, 0.15); 
+            transform: translateY(-5px); 
+            box-shadow: 0 5px 15px rgba(255, 71, 51, 0.3); 
         }
-        .nav-link-custom.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%; transform: translateX(-50%);
-            width: 80%; height: 3px; background: #ff4733;
-            box-shadow: 0 0 15px #ff4733;
+
+        .nav-link.active { 
+            color: #ffcc33 !important; 
+            border-bottom: 4px solid #ffcc33;
         }
+
+        .user-auth-container {
+            margin-left: 20px;
+        }
+
+        /* Navbar Toggler Style */
+        .navbar-toggler {
+            border: 2px solid #ff4733 !important;
+            background: rgba(255, 71, 51, 0.2) !important;
+            padding: 0.5rem 0.75rem;
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 71, 51, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 71, 51, 0.25);
+        }
+
+        /* Mobile menu transparency */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: transparent !important;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                padding: 1rem;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border-bottom: 2px solid #ff4733;
+            }
+            
+            .navbar-nav {
+                background: transparent;
+                margin: 0;
+            }
+            
+            .nav-link {
+                min-height: 50px;
+                padding: 0.8rem 1rem !important;
+                text-align: center;
+                background: rgba(0, 0, 0, 0.4);
+                margin: 4px 0;
+                border-radius: 8px;
+                border: 1px solid rgba(255, 71, 51, 0.3);
+                font-size: 1rem;
+            }
+            
+            .nav-link:hover {
+                background: rgba(255, 71, 51, 0.3);
+            }
+            
+            .nav-link.active {
+                background: rgba(255, 71, 51, 0.4);
+                border-bottom: 4px solid #ffcc33 !important;
+            }
+
+            .user-auth-container {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+
+        /* ----- User Auth Button (Desktop) ----- */
         .user-auth-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: rgba(255,71,51,0.3);
-            border: none;
+            border: 2px solid #ff4733;
             color: white;
-            font-weight: 600;
-            padding: 0.5rem 1.2rem;
-            border-radius: 0;
-            height: 70px;
+            font-weight: 700;
+            padding: 0 20px;
+            min-height: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-radius: 10px;
+            white-space: nowrap;
         }
         .user-auth-btn:hover {
-            background: rgba(255,71,51,0.4);
             color: #ffcc33;
+            background: rgba(255,71,51,0.4);
+            transform: translateY(-2px);
+        }
+        .user-auth-btn i { margin-right: 8px; }
+
+        /* ----- Mobile Auth Extra (placed inside collapse) ----- */
+        .mobile-auth-extra {
+            background: transparent;
+            border-top: 1px solid #ff4733;
+            padding: 1rem;
+            margin-top: 10px;
+        }
+        .mobile-profile-btn, .mobile-login-btn, .mobile-signup-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            width: 100%;
+            font-family: 'Rajdhani', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .mobile-profile-btn {
+            border: 2px solid rgba(255,204,51,0.5);
+            background: rgba(255,204,51,0.15);
+            color: #ffcc33;
+        }
+        .mobile-profile-btn:hover { background: rgba(255,204,51,0.3); transform: translateY(-2px); }
+        .mobile-login-btn {
+            border: 2px solid rgba(255,71,51,0.6);
+            background: rgba(255,71,51,0.2);
+            color: #ff9966;
+        }
+        .mobile-login-btn:hover { background: rgba(255,71,51,0.3); color: #ffcc33; border-color: #ff4733; transform: translateY(-2px); }
+        .mobile-signup-btn {
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, #ff4733, #ff9966);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255,71,51,0.3);
+        }
+        .mobile-signup-btn:hover { background: linear-gradient(135deg, #ff3366, #ffcc33); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,71,51,0.5); }
+
+        /* ----- Scroll Indicator ----- */
+        .scroll-indicator {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff4733, #ffcc33, #ff4733);
+            transform-origin: left;
+            transform: scaleX(0);
+            z-index: 1031;
         }
 
         /* ----- SECTION HEADERS – ORBITRON ----- */
@@ -110,7 +251,7 @@
             color: #ff9966;
             text-shadow: 0 0 10px rgba(255,153,102,0.5);
         }
-        /* ----- SPONSOR CARD – O(1) bootstrap grid, border, hover ----- */
+        /* ----- SPONSOR CARD – bootstrap grid, border, hover ----- */
         .sponsor-card {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
@@ -145,7 +286,7 @@
         .sponsor-name { font-size: 1.3rem; font-weight: 600; color: #fff; }
         .sponsor-type { color: #ff9966; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* ----- FEATURED MARKETING SECTION (O(1) gradient, border) ----- */
+        /* ----- FEATURED MARKETING SECTION (gradient, border) ----- */
         .marketing-featured {
             background: linear-gradient(135deg, rgba(255,153,102,0.1), rgba(0,102,204,0.1));
             border: 2px solid rgba(0,102,204,0.5);
@@ -167,7 +308,7 @@
         }
         @keyframes pulse-glow { 0% { box-shadow: 0 0 15px rgba(255,153,102,0.5); } 50% { box-shadow: 0 0 25px rgba(255,153,102,0.8); } }
 
-        /* ----- INFINITE SLIDER – O(1) duplicate via JS but layout bootrap ----- */
+        /* ----- INFINITE SLIDER ----- */
         .slider-section {
             background: rgba(0,0,0,0.3);
             border-radius: 15px;
@@ -193,7 +334,7 @@
         .slider-logo-box img { max-width: 100%; max-height: 100%; filter: grayscale(0.3); transition: 0.3s; }
         .slider-item:hover img { filter: grayscale(0); transform: scale(1.1); }
 
-        /* ----- 3D BUTTONS (O(1) effects) ----- */
+        /* ----- 3D BUTTONS (effects) ----- */
         .btn-3d-sponsor {
             background: linear-gradient(145deg, #0066cc, #0052a3);
             border: none; border-radius: 15px;
@@ -252,41 +393,53 @@
             border-left: 2px solid #ff4733;
             transform: translateX(0);
         }
-        /* O(1) complexity — all loops happen at bootstrap/grid level, constant time */
+
+        /* Responsive adjustments */
+        @media (max-width: 991px) {
+            .scroll-indicator { top: 0; }
+            .navbar-nav {
+                gap: 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- custom cursor – O(1) direct dom update -->
+    <!-- custom cursor -->
     <div class="cursor-dot" data-cursor-dot></div>
     <div class="cursor-outline" data-cursor-outline></div>
 
-    <!-- ===== BOOTSTRAP NAVBAR – fixed top, fully O(1) no scanning ===== -->
-    <nav class="navbar navbar-expand-lg festronix-nav fixed-top px-3 px-xl-5">
-        <div class="container-fluid">
-            <!-- dummy brand to keep flex, we hide on mobile but keeps spacing -->
-            <span class="navbar-brand text-white d-lg-none" style="font-family: Orbitron;">F2.0</span>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-100 d-flex justify-content-center">
-                    <li class="nav-item"><a class="nav-link nav-link-custom" href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                    <li class="nav-item"><a class="nav-link nav-link-custom" href="previous.html"><i class="fas fa-history"></i> Previous Year</a></li>
-                    <li class="nav-item"><a class="nav-link nav-link-custom" href="gallery.html"><i class="fas fa-images"></i> Picture Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link nav-link-custom" href="events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
-                    <li class="nav-item"><a class="nav-link nav-link-custom active" href="sponsors.html"><i class="fas fa-handshake"></i> Sponsorship</a></li>
-                    <li class="nav-item"><a class="nav-link nav-link-custom" href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
-                    <li class="nav-item"><a class="nav-link nav-link-custom" href="team.html"><i class="fas fa-users"></i> Team</a></li>
-                    <li class="nav-item"><a class="nav-link nav-link-custom" href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
-                    <!-- user auth container replaced via js O(1) -->
-                    <li class="nav-item" id="userAuthContainer"></li>
+    <!-- SCROLL INDICATOR -->
+    <div class="scroll-indicator"></div>
+
+    <!-- ========== UPDATED NAVIGATION - MATCHING INDEX.HTML STYLE ========== -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid px-lg-4">
+            <a class="navbar-brand d-lg-none text-warning fw-bold" href="#">FESTRONIX</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#festronixNavbar" aria-controls="festronixNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="festronixNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-100 justify-content-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="previous.html"><i class="fas fa-history"></i> Previous</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="sponsors.html"><i class="fas fa-handshake"></i> Sponsors</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="team.html"><i class="fas fa-users"></i> Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li class="nav-item user-auth-container ms-lg-3" id="userAuthContainer"></li>
                 </ul>
             </div>
-            <!-- mobile trigger with bootstrap no js? we keep minimal for toggle -->
-            <button class="navbar-toggler border-0 p-2" type="button" id="mobileMenuBtn" style="background: transparent;">
-                <i class="fas fa-bars fs-2" style="color: #ffcc33;"></i>
-            </button>
         </div>
     </nav>
 
-    <!-- Mobile overlay (offcanvas style) O(1) -->
+    <!-- Mobile Auth Extra (will be moved inside collapse via JS) -->
+    <div class="d-lg-none mobile-auth-extra" id="mobileAuthExtra">
+        <div class="mobile-auth-buttons" id="mobileAuthButtons"></div>
+    </div>
+
+    <!-- Mobile overlay (offcanvas style) -->
     <div class="mobile-nav-overlay" id="mobileNavOverlay">
         <div class="mobile-nav-container p-4">
             <div class="d-flex justify-content-between align-items-center text-white mb-4">
@@ -299,18 +452,19 @@
             </div>
             <div class="d-flex flex-column gap-2">
                 <a href="index.html" class="mobile-nav-item text-white text-decoration-none p-3"><i class="fas fa-home me-3"></i>Home</a>
-                <a href="previous.html" class="mobile-nav-item text-white text-decoration-none p-3"><i class="fas fa-history me-3"></i>Previous Year</a>
-                <a href="events.html" class="mobile-nav-item text-white text-decoration-none p-3"><i class="fas fa-calendar-alt me-3"></i>Events</a>
+                <a href="previous.html" class="mobile-nav-item text-white text-decoration-none p-3"><i class="fas fa-history me-3"></i>Previous</a>
                 <a href="gallery.html" class="mobile-nav-item text-white text-decoration-none p-3"><i class="fas fa-images me-3"></i>Gallery</a>
-                <a href="sponsors.html" class="mobile-nav-item text-white text-decoration-none p-3"><i class="fas fa-handshake me-3"></i>Sponsorship</a>
+                <a href="events.html" class="mobile-nav-item text-white text-decoration-none p-3"><i class="fas fa-calendar-alt me-3"></i>Events</a>
+                <a href="sponsors.html" class="mobile-nav-item text-white text-decoration-none p-3"><i class="fas fa-handshake me-3"></i>Sponsors</a>
                 <a href="about.html" class="mobile-nav-item text-white text-decoration-none p-3"><i class="fas fa-info-circle me-3"></i>About</a>
+                <a href="team.html" class="mobile-nav-item text-white text-decoration-none p-3"><i class="fas fa-users me-3"></i>Team</a>
                 <a href="contact.html" class="mobile-nav-item text-white text-decoration-none p-3"><i class="fas fa-envelope me-3"></i>Contact</a>
             </div>
             <div class="mt-4 px-2 d-flex flex-column gap-2" id="mobileAuthButtons"></div>
         </div>
     </div>
 
-    <!-- MAIN CONTENT – bootstrap grid O(1) -->
+    <!-- MAIN CONTENT – bootstrap grid -->
     <main class="container-fluid px-3 px-md-5" style="margin-top: 90px;">
         <!-- HEADER -->
         <div class="row text-center my-5">
@@ -320,7 +474,7 @@
             </div>
         </div>
 
-        <!-- MARKETING SPONSOR - featured O(1) -->
+        <!-- MARKETING SPONSOR - featured -->
         <div class="row justify-content-center mb-5">
             <div class="col-lg-8">
                 <div class="marketing-featured text-center">
@@ -335,19 +489,19 @@
             </div>
         </div>
 
-        <!-- BECOME SPONSOR BUTTON (O(1) action) -->
+        <!-- BECOME SPONSOR BUTTON -->
         <div class="row justify-content-center my-4">
             <div class="col-auto">
                 <button class="btn-3d-sponsor" id="becomeSponsorBtn"><i class="fas fa-handshake"></i> Become a Sponsor</button>
             </div>
         </div>
 
-        <!-- INFINITE SLIDER – O(1) duplicate via js but constant time -->
+        <!-- INFINITE SLIDER – duplicate via js -->
         <div class="slider-section my-5">
             <h3 class="text-center fs-1 fw-bold" style="color:#ff9966; font-family: Orbitron;">Our Esteemed Partners</h3>
             <div class="position-relative">
                 <div class="slider-track" id="sponsorSlider">
-                    <!-- slides will be duplicated once via JS (O(1) operation) -->
+                    <!-- slides will be duplicated once via JS -->
                     <div class="slider-item"><div class="slider-logo-box"><img src="https://via.placeholder.com/150x80/ff6600/ffffff?text=TECHGIANT" class="img-fluid"></div><div class="text-white mt-2">TechGiant Inc.</div></div>
                     <div class="slider-item"><div class="slider-logo-box"><img src="https://via.placeholder.com/150x80/0066cc/ffffff?text=INNOVATELABS" class="img-fluid"></div><div class="text-white mt-2">InnovateLabs</div></div>
                     <div class="slider-item"><div class="slider-logo-box"><img src="https://via.placeholder.com/150x80/3366ff/ffffff?text=AI-SOLUTIONS" class="img-fluid"></div><div class="text-white mt-2">AI Solutions</div></div>
@@ -362,7 +516,7 @@
             </div>
         </div>
 
-        <!-- SPONSOR CATEGORIES - BOOTSTRAP GRID O(1) -->
+        <!-- SPONSOR CATEGORIES - BOOTSTRAP GRID -->
         <!-- Technical Sponsors -->
         <div class="sponsor-category my-5 p-4" style="background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); border-radius: 15px;">
             <div class="category-header text-center mb-4">
@@ -415,7 +569,7 @@
             </div>
         </div>
 
-        <!-- CTA: O(1) contact -->
+        <!-- CTA: contact -->
         <div class="row text-center my-5 py-5">
             <div class="col-12">
                 <h3 style="color:#ff9966; font-family: Orbitron;">Interested in Sponsoring?</h3>
@@ -425,7 +579,7 @@
         </div>
     </main>
 
-    <!-- FOOTER bootstrap grid O(1) -->
+    <!-- FOOTER bootstrap grid -->
     <footer class="footer-3d">
         <div class="container">
             <div class="row align-items-center">
@@ -460,55 +614,163 @@
     <!-- Back to Top Button -->
     <button class="back-to-top" id="backToTop"><i class="fas fa-chevron-up"></i></button>
 
-    <!-- JAVASCRIPT: BOOTSTRAP + O(1) SPONSOR LOGIC (ALL LOOPS = CONSTANT TIME) -->
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- UPDATED SCRIPT - MATCHING INDEX.HTML STYLE -->
     <script>
         (function() {
             "use strict";
 
-            // ---------- O(1) cursor animation ----------
+            // ---------- DOM cache ----------
+            const DOM = {
+                loader: document.getElementById('loader'),
+                days: document.getElementById('mainDays'),
+                hours: document.getElementById('mainHours'),
+                minutes: document.getElementById('mainMinutes'),
+                seconds: document.getElementById('mainSeconds'),
+                slider: document.getElementById('slider'),
+                welcomeTitle: document.getElementById('welcomeTitle'),
+                userAuthContainer: document.getElementById('userAuthContainer'),
+                promoVideo: document.getElementById('promoVideo'),
+                promoMuteBtn: document.getElementById('promoMuteBtn'),
+                desktopVideo: document.getElementById('desktopVideo'),
+                mobileVideo: document.getElementById('mobileVideo')
+            };
+
+            // ---------- CURSOR ANIMATION ----------
             const cursorDot = document.querySelector("[data-cursor-dot]");
             const cursorOutline = document.querySelector("[data-cursor-outline]");
             if (cursorDot && cursorOutline) {
                 let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-                document.addEventListener("mousemove", (e) => { mouseX = e.clientX; mouseY = e.clientY; cursorDot.style.left = mouseX + "px"; cursorDot.style.top = mouseY + "px"; });
-                document.addEventListener("mousedown", () => { if(cursorOutline) { cursorOutline.style.transform = "translate(-50%, -50%) scale(0.8)"; cursorOutline.style.borderColor = "#ffcc33"; } });
-                document.addEventListener("mouseup", () => { if(cursorOutline) { cursorOutline.style.transform = "translate(-50%, -50%) scale(1)"; cursorOutline.style.borderColor = "rgba(255,71,51,0.8)"; } });
-                function animateCursor() { cursorX += (mouseX - cursorX) * 0.15; cursorY += (mouseY - cursorY) * 0.15; cursorOutline.style.left = cursorX + "px"; cursorOutline.style.top = cursorY + "px"; requestAnimationFrame(animateCursor); }
+                document.addEventListener("mousemove", (e) => { 
+                    mouseX = e.clientX; mouseY = e.clientY; 
+                    cursorDot.style.left = mouseX + "px"; cursorDot.style.top = mouseY + "px"; 
+                });
+                document.addEventListener("mousedown", () => { 
+                    if(cursorOutline) { 
+                        cursorOutline.style.transform = "translate(-50%, -50%) scale(0.8)"; 
+                        cursorOutline.style.borderColor = "#ffcc33"; 
+                    } 
+                });
+                document.addEventListener("mouseup", () => { 
+                    if(cursorOutline) { 
+                        cursorOutline.style.transform = "translate(-50%, -50%) scale(1)"; 
+                        cursorOutline.style.borderColor = "rgba(255,71,51,0.8)"; 
+                    } 
+                });
+                function animateCursor() { 
+                    cursorX += (mouseX - cursorX) * 0.15; 
+                    cursorY += (mouseY - cursorY) * 0.15; 
+                    cursorOutline.style.left = cursorX + "px"; 
+                    cursorOutline.style.top = cursorY + "px"; 
+                    requestAnimationFrame(animateCursor); 
+                }
                 animateCursor();
             }
 
-            // ---------- O(1) auth update ----------
-            function updateAuth() {
+            // ---------- USER AUTH DISPLAY ----------
+            function updateUserAuthDisplay() {
                 const container = document.getElementById('userAuthContainer');
                 const mobileAuth = document.getElementById('mobileAuthButtons');
                 const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-                let html = '', mobileHtml = '';
+                
+                let htmlContent = '', mobileHtmlContent = '';
+                
                 if (isLoggedIn) {
                     const user = JSON.parse(localStorage.getItem('userData') || '{}');
-                    html = `<a class="nav-link nav-link-custom user-auth-btn" href="#" id="userAuthBtn"><i class="fas fa-user"></i> ${user.firstName || 'User'}</a>`;
-                    mobileHtml = `<a href="profile.html" class="btn btn-outline-warning w-100 mb-2"><i class="fas fa-user"></i> Profile</a>
-                                  <a href="#" class="btn btn-outline-danger w-100" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>`;
-                    document.getElementById('mobileUserName').innerText = user.firstName || 'User';
-                    document.getElementById('mobileUserEmail').innerText = user.email || '';
+                    htmlContent = `
+                        <a class="user-auth-btn" id="userAuthBtn" href="profile.html">
+                            <i class="fas fa-user"></i>
+                            <span id="userAuthText">${user.firstName || 'User'}</span>
+                        </a>
+                    `;
+                    mobileHtmlContent = `
+                        <a href="profile.html" class="mobile-profile-btn w-100 mb-2">
+                            <i class="fas fa-user me-2"></i> Profile
+                        </a>
+                        <a href="#" class="mobile-login-btn w-100" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        </a>
+                    `;
+                    const mobileName = document.getElementById('mobileUserName');
+                    const mobileEmail = document.getElementById('mobileUserEmail');
+                    if (mobileName) mobileName.innerText = user.firstName || 'User';
+                    if (mobileEmail) mobileEmail.innerText = user.email || '';
                 } else {
-                    html = `<a class="nav-link nav-link-custom user-auth-btn" href="signup.html"><i class="fas fa-user-plus"></i> Signup</a>`;
-                    mobileHtml = `<a href="login.html" class="btn btn-outline-warning w-100 mb-2"><i class="fas fa-sign-in-alt"></i> Login</a>
-                                  <a href="signup.html" class="btn btn-warning w-100"><i class="fas fa-user-plus"></i> Sign Up</a>`;
-                    document.getElementById('mobileUserName').innerText = 'Guest';
-                    document.getElementById('mobileUserEmail').innerText = 'Not logged in';
+                    htmlContent = `<a class="user-auth-btn" href="signup.html"><i class="fas fa-user-plus"></i><span>Signup</span></a>`;
+                    mobileHtmlContent = `
+                        <a href="login.html" class="mobile-login-btn w-100 mb-2">
+                            <i class="fas fa-sign-in-alt me-2"></i> Login
+                        </a>
+                        <a href="signup.html" class="mobile-signup-btn w-100">
+                            <i class="fas fa-user-plus me-2"></i> Sign Up
+                        </a>
+                    `;
                 }
-                if (container) container.innerHTML = html;
-                if (mobileAuth) mobileAuth.innerHTML = mobileHtml;
+                if (container) container.innerHTML = htmlContent;
+                if (mobileAuth) mobileAuth.innerHTML = mobileHtmlContent;
+                
                 if (isLoggedIn) {
                     const logoutBtn = document.getElementById('logoutBtn');
-                    if(logoutBtn) logoutBtn.addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem('isLoggedIn'); localStorage.removeItem('userData'); updateAuth(); location.reload(); });
-                    const userBtn = document.getElementById('userAuthBtn');
-                    if(userBtn) userBtn.addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'profile.html'; });
+                    if (logoutBtn) {
+                        logoutBtn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            localStorage.removeItem('isLoggedIn');
+                            localStorage.removeItem('userData');
+                            updateUserAuthDisplay();
+                            location.reload();
+                        });
+                    }
+                    const userAuthBtn = document.getElementById('userAuthBtn');
+                    if (userAuthBtn) {
+                        userAuthBtn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            window.location.href = 'profile.html';
+                        });
+                    }
                 }
             }
 
-            // ---------- slider O(1) duplicate (single operation) ----------
+            // ---------- MOBILE MENU ----------
+            function arrangeMobileAuth() {
+                const collapse = document.getElementById('festronixNavbar');
+                const extra = document.getElementById('mobileAuthExtra');
+                if (collapse && extra) {
+                    collapse.appendChild(extra);
+                }
+            }
+
+            // ---------- SCROLL INDICATOR & BACK TO TOP ----------
+            function initScrollFeatures() {
+                const topBtn = document.getElementById('backToTop');
+                const scrollIndicator = document.querySelector('.scroll-indicator');
+                window.addEventListener('scroll', () => {
+                    if (topBtn) {
+                        topBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+                    }
+                    if (scrollIndicator) {
+                        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                        scrollIndicator.style.transform = `scaleX(${winScroll / height})`;
+                    }
+                });
+                if (topBtn) {
+                    topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                }
+            }
+
+            // ---------- SET ACTIVE NAVIGATION ----------
+            function setActiveNavItem() {
+                const currentPage = window.location.pathname.split('/').pop() || 'sponsors.html';
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href === currentPage) link.classList.add('active');
+                    else link.classList.remove('active');
+                });
+            }
+
+            // ---------- SLIDER DUPLICATE ----------
             const track = document.getElementById('sponsorSlider');
             if (track && !track.hasAttribute('data-duplicated')) {
                 const clone = track.innerHTML;
@@ -516,51 +778,68 @@
                 track.setAttribute('data-duplicated', 'true');
             }
 
-            // ---------- mobile menu O(1) toggle ----------
+            // ---------- MOBILE OVERLAY TOGGLE ----------
             const menuBtn = document.getElementById('mobileMenuBtn');
             const overlay = document.getElementById('mobileNavOverlay');
             const closeBtn = document.getElementById('mobileCloseBtn');
             if (menuBtn && overlay && closeBtn) {
-                const toggle = () => { overlay.classList.toggle('show'); document.body.style.overflow = overlay.classList.contains('show') ? 'hidden' : ''; };
+                const toggle = () => { 
+                    overlay.classList.toggle('show'); 
+                    document.body.style.overflow = overlay.classList.contains('show') ? 'hidden' : ''; 
+                };
                 menuBtn.addEventListener('click', toggle);
                 closeBtn.addEventListener('click', toggle);
                 overlay.addEventListener('click', (e) => { if(e.target === overlay) toggle(); });
             }
 
-            // ---------- back to top O(1) ----------
-            const backBtn = document.getElementById('backToTop');
-            if (backBtn) {
-                window.addEventListener('scroll', function() { backBtn.style.display = window.scrollY > 300 ? 'flex' : 'none'; });
-                backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-            }
-
-            // ---------- sponsor form buttons O(1) ----------
+            // ---------- SPONSOR BUTTONS ----------
             const becomeBtn = document.getElementById('becomeSponsorBtn');
             if (becomeBtn) {
                 becomeBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const url = 'https://docs.google.com/forms/d/e/1FAIpQLSfYOUR_FORM_ID_HERE/viewform'; // replace
-                    window.open(url, '_blank');
+                    alert('Sponsorship form would open here. Please contact sponsorship team.');
                 });
             }
             const contactBtn = document.getElementById('contactSponsorBtn');
-            if (contactBtn) contactBtn.addEventListener('click', () => window.location.href = 'contact.html');
+            if (contactBtn) {
+                contactBtn.addEventListener('click', () => window.location.href = 'contact.html');
+            }
 
-            // card buttons O(1) - notification
+            // ---------- CARD BUTTONS ----------
             document.querySelectorAll('.card-btn').forEach(btn => {
-                btn.addEventListener('click', function(e){ e.stopPropagation(); alert('Sponsor details modal would open.'); });
+                btn.addEventListener('click', function(e) { 
+                    e.stopPropagation(); 
+                    alert('Sponsor details modal would open.'); 
+                });
             });
 
-            // ---------- intersection observer O(n) but we skip for O(1) simplicity; we just fade? but we aim O(1) so we don't observe.
-            // bootstrap renders instantly, no extra loops.
-            
-            updateAuth();
-            // remove extra active class from nav – bootstrap handles, but keep active on sponsors
-            document.querySelectorAll('.nav-link-custom').forEach(link => {
-                if(link.getAttribute('href') === 'sponsors.html') link.classList.add('active');
+            // ---------- VIDEO AUTOPLAY FALLBACK ----------
+            const video = document.querySelector('video');
+            if (video) video.play().catch(e => console.log("Autoplay blocked"));
+
+            // ---------- ENSURE MOBILE USER ELEMENTS ----------
+            function ensureMobileUserElements() {
+                if (!document.getElementById('mobileUserName')) {
+                    const nameSpan = document.createElement('span');
+                    nameSpan.id = 'mobileUserName';
+                    nameSpan.style.display = 'none';
+                    document.body.appendChild(nameSpan);
+                    const emailSpan = document.createElement('span');
+                    emailSpan.id = 'mobileUserEmail';
+                    emailSpan.style.display = 'none';
+                    document.body.appendChild(emailSpan);
+                }
+            }
+
+            // ---------- INITIALIZATION ----------
+            document.addEventListener('DOMContentLoaded', function() {
+                ensureMobileUserElements();
+                updateUserAuthDisplay();
+                arrangeMobileAuth();
+                initScrollFeatures();
+                setActiveNavItem();
             });
         })();
     </script>
-    <!-- no extra js loops, O(1) design achieved by bootstrap grid + direct manipulation -->
 </body>
 </html>

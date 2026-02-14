@@ -129,7 +129,7 @@
             align-items: center;
             transition: opacity 0.5s;
         }
-        .loader-hidden { opacity: 0; pointer-events: none; }
+        .loader-hidden { opacity: 0; pointer-events: none; visibility: hidden; }
         .loader-wrapper { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; }
         .loader-letter {
             font-family: 'Orbitron', sans-serif;
@@ -140,6 +140,7 @@
             margin: 0 3px;
             opacity: 0;
             animation: letterReveal 0.3s forwards;
+            display: inline-block;
         }
         .loader-letter:nth-child(1) { animation-delay: 0.1s; }
         .loader-letter:nth-child(2) { animation-delay: 0.2s; }
@@ -182,53 +183,121 @@
             z-index: 1031;
         }
 
-        /* ----- BOOTSTRAP NAVBAR (NEON STYLE) ----- */
+        /* ===== UPDATED NAVBAR STYLES - MATCHING INDEX.HTML ===== */
         .navbar {
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(10px);
+            background: transparent;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-bottom: 2px solid #ff4733;
+            min-height: 70px;
+            z-index: 100;
             padding: 0 1rem;
-            min-height: 70px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            z-index: 1030;
         }
-        .navbar-nav {
-            width: 100%;
-            justify-content: center;
-            align-items: center;
+
+        /* Desktop: Center Nav Items */
+        @media (min-width: 992px) {
+            .navbar-nav {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+            }
         }
+
         .nav-link {
-            color: #fff !important;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            letter-spacing: 0.1rem;
-            padding: 0 0.8rem !important;
-            min-height: 70px;
+            color: white !important;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 1rem 2rem !important;
+            font-size: 1.25rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            white-space: nowrap;
+            border-radius: 10px;
             display: flex;
             align-items: center;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
         }
+
         .nav-link i {
-            margin-right: 6px;
+            margin-right: 8px;
             font-size: 1.1rem;
         }
-        .nav-link:hover {
-            color: #ffcc33 !important;
-            background: rgba(255,71,51,0.15);
-            transform: translateY(-2px);
+
+        .nav-link:hover { 
+            color: #ffcc33 !important; 
+            background: rgba(255, 71, 51, 0.15); 
+            transform: translateY(-5px); 
+            box-shadow: 0 5px 15px rgba(255, 71, 51, 0.3); 
         }
-        .nav-link.active {
-            color: #ffcc33 !important;
-            background: rgba(255,71,51,0.25);
-            border-bottom: 3px solid #ff4733 !important;
+
+        .nav-link.active { 
+            color: #ffcc33 !important; 
+            border-bottom: 4px solid #ffcc33;
         }
+
+        .user-auth-container {
+            margin-left: 20px;
+        }
+
+        /* Navbar Toggler Style */
         .navbar-toggler {
-            border: 1px solid rgba(255,204,51,0.5) !important;
-            background: transparent !important;
+            border: 2px solid #ff4733 !important;
+            background: rgba(255, 71, 51, 0.2) !important;
+            padding: 0.5rem 0.75rem;
         }
+        
         .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 204, 51, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 71, 51, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 71, 51, 0.25);
+        }
+
+        /* Mobile menu transparency */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: transparent !important;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                padding: 1rem;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border-bottom: 2px solid #ff4733;
+            }
+            
+            .navbar-nav {
+                background: transparent;
+                margin: 0;
+            }
+            
+            .nav-link {
+                min-height: 50px;
+                padding: 0.8rem 1rem !important;
+                text-align: center;
+                background: rgba(0, 0, 0, 0.4);
+                margin: 4px 0;
+                border-radius: 8px;
+                border: 1px solid rgba(255, 71, 51, 0.3);
+                font-size: 1rem;
+            }
+            
+            .nav-link:hover {
+                background: rgba(255, 71, 51, 0.3);
+            }
+            
+            .nav-link.active {
+                background: rgba(255, 71, 51, 0.4);
+                border-bottom: 4px solid #ffcc33 !important;
+            }
+
+            .user-auth-container {
+                margin-left: 0;
+                margin-top: 5px;
+            }
         }
 
         /* ----- User Auth Button (Desktop) ----- */
@@ -237,13 +306,15 @@
             align-items: center;
             justify-content: center;
             background: rgba(255,71,51,0.3);
+            border: 2px solid #ff4733;
             color: white;
-            font-weight: 600;
-            padding: 0 15px;
-            min-height: 70px;
+            font-weight: 700;
+            padding: 0 20px;
+            min-height: 50px;
             text-decoration: none;
             transition: all 0.3s;
-            border-bottom: 3px solid transparent;
+            border-radius: 10px;
+            white-space: nowrap;
         }
         .user-auth-btn:hover {
             color: #ffcc33;
@@ -254,16 +325,17 @@
 
         /* ----- Mobile Auth Extra (placed inside collapse) ----- */
         .mobile-auth-extra {
-            background: #000;
+            background: transparent;
             border-top: 1px solid #ff4733;
             padding: 1rem;
+            margin-top: 10px;
         }
         .mobile-profile-btn, .mobile-login-btn, .mobile-signup-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 600;
             text-decoration: none;
             width: 100%;
@@ -523,12 +595,13 @@
 
         /* ----- Responsive ----- */
         @media (max-width: 991px) {
-            .navbar .navbar-nav .nav-link { min-height: 50px; padding: 0.8rem 1rem !important; }
-            .hero-title { font-size: 3rem; }
             .scroll-indicator { top: 0; }
             .loader-letter { font-size: 3rem; }
             .route-input-group { flex-direction: column; }
             .route-btn { width: 100%; justify-content: center; }
+            .navbar-nav {
+                gap: 0;
+            }
         }
         @media (max-width: 767px) {
             .hero-title { font-size: 2.5rem; }
@@ -553,13 +626,13 @@
     <!-- LOADER (login page style) -->
     <div class="loader-container" id="loader">
         <div class="loader-wrapper">
-            <span class="loader-letter">C</span>
-            <span class="loader-letter">O</span>
-            <span class="loader-letter">N</span>
-            <span class="loader-letter">T</span>
-            <span class="loader-letter">A</span>
-            <span class="loader-letter">C</span>
-            <span class="loader-letter">T</span>
+            <span class="loader-letter" style="animation-delay: 0s">C</span>
+            <span class="loader-letter" style="animation-delay: 0.1s">O</span>
+            <span class="loader-letter" style="animation-delay: 0.2s">N</span>
+            <span class="loader-letter" style="animation-delay: 0.3s">T</span>
+            <span class="loader-letter" style="animation-delay: 0.4s">A</span>
+            <span class="loader-letter" style="animation-delay: 0.5s">C</span>
+            <span class="loader-letter" style="animation-delay: 0.6s">T</span>
             <div class="loader"></div>
         </div>
         <div class="loader-subtitle">FESTRONIX 2.0</div>
@@ -583,19 +656,20 @@
     <!-- SCROLL INDICATOR -->
     <div class="scroll-indicator"></div>
 
-    <!-- ========== BOOTSTRAP STICKY NAVIGATION ========== -->
+    <!-- ========== UPDATED NAVIGATION - MATCHING INDEX.HTML STYLE ========== -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid px-lg-4">
             <a class="navbar-brand d-lg-none text-warning fw-bold" href="#">FESTRONIX</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#festronixNavbar">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#festronixNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="festronixNavbar">
-                <ul class="navbar-nav w-100 justify-content-center">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-100 justify-content-center">
                     <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="previous.html"><i class="fas fa-history"></i> Previous</a></li>
                     <li class="nav-item"><a class="nav-link" href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" href="events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sponsors.html"><i class="fas fa-handshake"></i> Sponsors</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
                     <li class="nav-item"><a class="nav-link" href="team.html"><i class="fas fa-users"></i> Team</a></li>
                     <li class="nav-item"><a class="nav-link active" href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
@@ -685,7 +759,7 @@
                 <div class="map-container" id="mapContainer">
                     <iframe 
                         id="gmapIframe"
-                        src="https://www.google.com/maps/dir/20.4738536,85.5667083/GIFT+Autonomous,+Bhubaneswar,+GIFT+Engineering+and+Management+College,+Gramadiha,+Gangapada,+Bhubaneswar,+Odisha+752054/@20.3697218,85.4746063,11z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3a19ab347765fb0f:0xccb84948b4b2bdf6!2m2!1d85.6739046!2d20.2226258?entry=ttu&g_ep=EgoyMDI2MDIxMC4wIKXMDSoASAFQAw%3D%3D" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3742.789888888888!2d85.8245398!3d20.2767109!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a19a7f1b1b1b1b1%3A0xccb84948b4b2bdf6!2sGIFT%20Autonomous%20College!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
                         allowfullscreen="" 
                         loading="lazy">
                     </iframe>
@@ -731,51 +805,27 @@
     <!-- jQuery (optional, for compatibility) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- BOOTSTRAP-IFIED SCRIPT (ALL FEATURES PRESERVED) -->
+    <!-- UPDATED SCRIPT - MATCHING INDEX.HTML FUNCTIONALITY -->
     <script>
         (function() {
             'use strict';
 
+            // ==================== DOM CACHE ====================
+            const DOM = {
+                loader: document.getElementById('loader'),
+                userAuthContainer: document.getElementById('userAuthContainer'),
+                promoVideo: document.getElementById('promoVideo'),
+                promoMuteBtn: document.getElementById('promoMuteBtn')
+            };
+
             // ==================== LOADER ====================
             window.addEventListener('load', function() {
-                const loader = document.getElementById('loader');
                 setTimeout(function() {
-                    if (loader) loader.classList.add('loader-hidden');
+                    if (DOM.loader) DOM.loader.classList.add('loader-hidden');
                 }, 3000);
             });
 
             // ==================== USER SESSION MANAGEMENT ====================
-            function checkUserLogin() {
-                const userData = localStorage.getItem('festronix_user_data');
-                if (userData) {
-                    const user = JSON.parse(userData);
-                    showUserProfile(user);
-                    return true;
-                }
-                if (localStorage.getItem('isLoggedIn') === 'true') {
-                    const userDataHome = localStorage.getItem('userData');
-                    if (userDataHome) {
-                        try {
-                            const user = JSON.parse(userDataHome);
-                            const festUser = {
-                                name: user.firstName || user.name || 'User',
-                                email: user.email || '',
-                                token: user.token || ''
-                            };
-                            localStorage.setItem('festronix_user_data', JSON.stringify(festUser));
-                            showUserProfile(festUser);
-                            return true;
-                        } catch(e) {}
-                    }
-                }
-                return false;
-            }
-
-            function showUserProfile(user) {
-                const userProfileSection = document.getElementById('userProfileSection');
-                if (!userProfileSection) return;
-            }
-
             function removeUserData() {
                 localStorage.removeItem('festronix_user_data');
                 localStorage.removeItem('festronix_remember_me');
@@ -972,8 +1022,8 @@
                 
                 // College destination coordinates (GIFT Autonomous College)
                 const destination = 'GIFT+Autonomous+College,+Bhubaneswar,+Odisha';
-                const destinationLat = '20.276710986402';
-                const destinationLng = '85.809134114918';
+                const destinationLat = '20.2767109';
+                const destinationLng = '85.8245398';
                 
                 if (getRouteBtn && startLocation && mapIframe) {
                     getRouteBtn.addEventListener('click', function() {
@@ -987,45 +1037,17 @@
                         // Encode the start location for URL
                         const encodedStart = encodeURIComponent(start);
                         
-                        // Create Google Maps directions URL with embedded parameters
-                        // This will show the route in the same iframe without opening a new tab
-                        const directionsUrl = `https://www.google.com/maps/embed/v1/directions?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&origin=${encodedStart}&destination=${destination}&mode=driving`;
+                        // Show notification that route is loading
+                        showNotification(`Finding route from "${start}" to GIFT Autonomous College...`, 'success');
                         
-                        // For free tier without API key, use the standard embed URL with parameters
-                        // This will show the route in the iframe
-                        const fallbackUrl = `https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1!2d${destinationLng}!3d${destinationLat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x3a19a7f1b1b1b1b1%3A0x1b1b1b1b1b1b1b1b!2s${destination}!3m2!1d${destinationLat}!2d${destinationLng}!4m5!1s0x0%3A0x0!2zJHt9!3m2!1d${destinationLat}!2d${destinationLng}!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin`;
+                        // Update iframe to show directions - using the working format
+                        mapIframe.src = `https://www.google.com/maps/embed/v1/directions?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&origin=${encodedStart}&destination=${destination}&mode=driving`;
                         
-                        // Try using the embed directions endpoint (works with API key)
-                        // Since we don't have a valid API key here, we'll use the standard directions URL which will show the route
-                        // in the same iframe
-                        const standardDirectionsUrl = `https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1!2d${destinationLng}!3d${destinationLat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s${encodedStart}!2s${encodedStart}!4m5!1s0x3a19a7f1b1b1b1b1%3A0x1b1b1b1b1b1b1b1b!2s${destination}!3m2!1d${destinationLat}!2d${destinationLng}!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin`;
-                        
-                        // Update iframe src to show directions
-                        mapIframe.src = `https://www.google.com/maps/embed/v1/directions?key=YOUR_API_KEY&origin=${encodedStart}&destination=${destination}&mode=driving`;
-                        
-                        // Since we don't have a real API key, we'll use a workaround:
-                        // Show a message that directions are loaded, and provide a link to open in Google Maps
-                        showNotification(`Route from "${start}" to GIFT Autonomous College loaded!`, 'success');
-                        
-                        // Alternative: Use the standard embed with a directions search
-                        // This will show the route in the iframe without requiring an API key
-                        const searchQuery = encodeURIComponent(`directions from ${start} to GIFT Autonomous College Bhubaneswar`);
-                        mapIframe.src = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${searchQuery}`;
-                        
-                        // Final working solution: Use the standard maps embed with a directions URL
-                        // This is the most reliable method without an API key
-                        mapIframe.src = `https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1!2d${destinationLng}!3d${destinationLat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s${encodedStart}!2s${encodedStart}!5m5!1s${destination}!2s${destination}!4m5!1s0x3a19a7f1b1b1b1b1%3A0x1b1b1b1b1b1b1b1b!2s${destination}!3m2!1d${destinationLat}!2d${destinationLng}!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin`;
-                        
-                        // For now, we'll use the simpler approach: show the route in a new iframe with a directions search
-                        mapIframe.src = `https://www.google.com/maps/embed/v1/directions?key=&origin=${encodedStart}&destination=${destination}&mode=driving`;
-                        
-                        // If the above doesn't work, this will show the college map with a route overlay
-                        mapIframe.src = `https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1!2d${destinationLng}!3d${destinationLat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x3a19a7f1b1b1b1b1%3A0x1b1b1b1b1b1b1b1b!2s${destination}!3m2!1d${destinationLat}!2d${destinationLng}!4m5!1s${encodedStart}!2s${encodedStart}!3m2!1d20.2960587!2d85.8245398!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin`;
-                        
-                        // Add a small delay to ensure the iframe updates
+                        // Fallback if API key doesn't work - open in new tab
                         setTimeout(() => {
-                            showNotification(`Route from "${start}" to GIFT Autonomous College displayed!`, 'success');
-                        }, 500);
+                            const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodedStart}&destination=${destination}&travelmode=driving`;
+                            window.open(directionsUrl, '_blank');
+                        }, 2000);
                     });
                 }
             }
@@ -1083,7 +1105,7 @@
 
             // ==================== VIDEO PLAY FALLBACK ====================
             function initVideo() {
-                const video = document.querySelector('video');
+                const video = document.querySelector('.video-background video');
                 if (video) video.play().catch(e => console.log('Autoplay blocked'));
             }
 
@@ -1111,7 +1133,7 @@
                 initScrollFeatures();
                 initAnimations();
                 initVideo();
-                initRoutePlanner(); // Initialize the route planner
+                initRoutePlanner();
             });
         })();
     </script>
