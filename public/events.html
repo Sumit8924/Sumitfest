@@ -1644,7 +1644,7 @@
                 const agree = document.getElementById('agreeCheckbox');
                 const next = document.getElementById('nextToRegistration');
                 if (agree) agree.addEventListener('change', function() { this.checked ? next.classList.add('active') : next.classList.remove('active'); });
-                if (next) next.addEventListener('click', function() { if (agree && agree.checked && currentEventData) { localStorage.setItem('selectedEvent', JSON.stringify({ name: currentEventData.name, category: currentEventData.category })); hideInstructions(); setTimeout(() => window.location.href = `registration_form.html?event=${encodeURIComponent(currentEventData.name)}&category=${encodeURIComponent(currentEventData.category)}`, 300); } });
+                if (next) next.addEventListener('click', function() { if (agree && agree.checked && currentEventData) { localStorage.setItem('selectedEvent', JSON.stringify({ name: currentEventData.name, category: currentEventData.category })); hideInstructions(); setTimeout(() => window.location.href = `registration.html?event=${encodeURIComponent(currentEventData.name)}&category=${encodeURIComponent(currentEventData.category)}`, 300); } });
                 document.getElementById('backFromInstructions')?.addEventListener('click', hideInstructions);
                 document.getElementById('closeInstructionModal')?.addEventListener('click', hideInstructions);
                 document.getElementById('instructionModal')?.addEventListener('click', function(e) { if (e.target === this) hideInstructions(); });

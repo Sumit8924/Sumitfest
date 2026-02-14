@@ -32,7 +32,6 @@
             height: 100%;
             z-index: -1;
             overflow: hidden;
-            will-change: transform;
         }
 
         .video-background video {
@@ -42,6 +41,8 @@
             transform: translate(-50%, -50%);
             min-width: 100%;
             min-height: 100%;
+            width: auto;
+            height: auto;
             object-fit: cover;
             opacity: 0.6;
         }
@@ -55,89 +56,101 @@
             background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%);
         }
 
-        /* Navbar */
+        /* NAVBAR STYLES */
         .navbar {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: transparent;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-bottom: 2px solid #ff4733;
-            padding: 0 1rem;
             min-height: 70px;
-            z-index: 1030;
+            z-index: 100;
+        }
+
+        @media (min-width: 992px) {
+            .navbar-nav {
+                width: 100%;
+                display: flex;
+                justify-content: center; 
+                align-items: center;
+                gap: 40px;
+            }
         }
 
         .nav-link {
-            color: #fff !important;
-            font-weight: 600;
-            letter-spacing: 0.1rem;
-            padding: 0 0.8rem !important;
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            transition: color 0.2s ease;
+            color: white !important;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 1rem 2rem !important; 
+            font-size: 1.25rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            white-space: nowrap;
+            border-radius: 10px;    
         }
 
-        .nav-link:hover {
-            color: #ffcc33 !important;
-            background: rgba(255, 71, 51, 0.15);
+        .nav-link:hover { 
+            color: #ffcc33 !important; 
+            background: rgba(255, 71, 51, 0.15); 
+            transform: translateY(-5px); 
+            box-shadow: 0 5px 15px rgba(255, 71, 51, 0.3); 
         }
 
-        .nav-link.active {
-            color: #ffcc33 !important;
-            background: rgba(255, 71, 51, 0.25);
-            border-bottom: 3px solid #ff4733 !important;
+        .nav-link.active { 
+            color: #ffcc33 !important; 
+            border-bottom: 4px solid #ffcc33;
         }
 
-        /* Timer */
+        .user-auth-container {
+            margin-left: 20px;
+        }
+
+        /* TIMER SECTION */
         .main-timer-section {
             width: 90%;
             max-width: 800px;
-            margin: 0 auto;
-            position: fixed;
-            top: 100px;
-            left: 0;
-            right: 0;
-            z-index: 500;
-            pointer-events: none;
+            margin: 120px auto 40px;
+            position: relative;
+            z-index: 200;
+        }
+        .main-timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 700px; margin: 0 auto; }
+        .main-timer-box { background: rgba(0,0,0,0.7); border: 2px solid #931909; border-radius: 12px; padding: 15px 5px; backdrop-filter: blur(10px); }
+        .main-timer-value { font-size: 2.5rem; font-weight: 900; color: #33ccff; font-family: 'Orbitron', sans-serif; line-height: 1; }
+        .main-timer-content { pointer-events: auto; }
+        
+        .ui-container {
+            position: relative;
+            z-index: 50;
+            min-height: 100vh;
+            padding-top: 20px;
         }
 
-        .main-timer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .main-timer-box {
-            background: rgba(0,0,0,0.7);
-            border: 2px solid #931909;
-            border-radius: 12px;
-            padding: 15px 5px;
-            backdrop-filter: blur(10px);
-            transform: translateZ(0);
-        }
-
-        .main-timer-value {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #33ccff;
-            font-family: 'Orbitron', sans-serif;
-            line-height: 1;
-            will-change: contents;
-        }
-
-        /* 3D SLIDER - FASTER ANIMATION */
-        .scene {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+        /* LOGO STYLING */
+        .logo-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
             width: 100%;
-            height: 45vh;
-            perspective: 2200px;
+        }
+        .fest-logo {
+            width: 500px; 
+            max-width: 80vw; 
+            height: auto; 
+            filter: drop-shadow(0 0 25px rgba(255,0,0,0.6));
+        }
+
+        #welcomeTitle {
+            margin-bottom: 20px;
+        }
+
+        /* 3D SLIDER */
+        .scene {
+            position: relative;
+            width: 100%;
+            height: 35vh;
+            perspective: 2000px;
             z-index: 5;
             overflow: hidden;
-            pointer-events: none;
+            margin-bottom: 20px;
         }
 
         .slider {
@@ -220,8 +233,85 @@
             transform: scale(1.1);
         }
 
-        .slider-btn:active {
-            transform: scale(0.95);
+        /* SIMPLE PROMO VIDEO */
+        .promo-section {
+            width: 100%;
+            margin: 30px auto 80px;
+            text-align: center;
+        }
+
+        .promo-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ff4733;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 71, 51, 0.5);
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        .promo-header::before,
+        .promo-header::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 2px;
+            background: #ff4733;
+            box-shadow: 0 0 10px #ff4733;
+        }
+
+        .promo-header::before {
+            left: -30px;
+        }
+
+        .promo-header::after {
+            right: -30px;
+        }
+
+        .promo-header i {
+            margin-right: 10px;
+            color: #ffcc33;
+        }
+
+        .promo-video {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            aspect-ratio: 16/9;
+            display: block;
+            margin: 0 auto;
+            border: none;
+            box-shadow: 0 20px 40px rgba(255, 71, 51, 0.3);
+            border-radius: 8px;
+        }
+
+        .promo-controls {
+            margin-top: 15px;
+        }
+
+        .mute-toggle {
+            background: rgba(255, 71, 51, 0.2);
+            border: 2px solid #ff4733;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mute-toggle:hover {
+            background: #ff4733;
+            transform: scale(1.1);
         }
 
         /* Marquee */
@@ -253,51 +343,79 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* Loader */
+        /* ===== LOADER WITH ORIENTATION-BASED VIDEO ===== */
         .loader-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: #000;
             z-index: 99999;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.3s ease;
+            overflow: hidden;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .loader-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+        }
+
+        /* Hide desktop video on mobile, hide mobile video on desktop */
+        .video-desktop {
+            display: block;
+        }
+        .video-mobile {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .video-desktop {
+                display: none;
+            }
+            .video-mobile {
+                display: block;
+            }
+            
+            /* Mobile-specific video sizing */
+            .loader-video {
+                object-fit: contain;
+                width: 100% !important;
+                height: 100% !important;
+                min-width: unset;
+                min-height: unset;
+            }
         }
 
         .loader-hidden {
             opacity: 0;
-            pointer-events: none;
             visibility: hidden;
+            pointer-events: none;
         }
 
-        .loader-letter {
-            font-family: 'Orbitron';
-            font-size: 2rem;
-            color: #ff4733;
-            margin: 0 5px;
-            animation: bounce 0.8s infinite;
-            display: inline-block;
-        }
-
-        @keyframes bounce {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        /* Mobile responsive */
+        /* Mobile responsive general */
         @media (max-width: 600px) {
-            .main-timer-section { top: 80px; }
+            .main-timer-section { top: 40px; }
             .main-timer-grid { gap: 5px; }
             .main-timer-box { padding: 6px 3px; }
             .main-timer-value { font-size: 1.4rem; }
-            .main-timer-label { font-size: 0.6rem; }
-            .scene { height: 35vh; }
+            .scene { height: 35vh; margin-bottom: 10px; }
             .card { width: 120px; height: 160px; }
             .slider-controls { display: none; }
+            .promo-header { font-size: 1.5rem; }
+            .promo-header::before,
+            .promo-header::after {
+                width: 20px;
+            }
+            .promo-header::before { left: -15px; }
+            .promo-header::after { right: -15px; }
         }
 
         @media (max-width: 400px) {
@@ -307,19 +425,22 @@
 </head>
 <body>
 
-    <!-- LOADER -->
+    <!-- LOADER WITH SEPARATE DESKTOP & MOBILE VIDEOS -->
     <div class="loader-container" id="loader">
-        <div class="d-flex">
-            <span class="loader-letter" style="animation-delay: 0s">F</span>
-            <span class="loader-letter" style="animation-delay: 0.1s">E</span>
-            <span class="loader-letter" style="animation-delay: 0.2s">S</span>
-            <span class="loader-letter" style="animation-delay: 0.3s">T</span>
-            <span class="loader-letter" style="animation-delay: 0.4s">R</span>
-            <span class="loader-letter" style="animation-delay: 0.5s">O</span>
-            <span class="loader-letter" style="animation-delay: 0.6s">N</span>
-            <span class="loader-letter" style="animation-delay: 0.7s">I</span>
-            <span class="loader-letter" style="animation-delay: 0.8s">X</span>
-        </div>
+        <!-- Desktop/Landscape Video -->
+        <video autoplay muted playsinline class="loader-video video-desktop" id="desktopVideo">
+            <source src="fest.mp4" type="video/mp4">
+            <!-- Replace with your desktop/landscape video -->
+        </video>
+        
+        <!-- Mobile/Portrait Video -->
+        <video autoplay muted playsinline class="loader-video video-mobile" id="mobileVideo">
+            <source src="fest1.mp4" type="video/mp4">
+            <!-- Replace with your mobile/portrait video -->
+        </video>
+        
+        <!-- Fallback text for older browsers -->
+        Your browser does not support the video tag.
     </div>
 
     <!-- VIDEO BACKGROUND -->
@@ -354,36 +475,55 @@
     </nav>
 
     <!-- MAIN UI -->
-    <div class="ui-container" style="position: relative; z-index: 10; min-height: calc(100dvh - 70px); display: flex; flex-direction: column; align-items: center; padding-top: 90px;">
-        <div class="text-center mb-4">
-            <img src="https://res.cloudinary.com/dpc4l1hic/image/upload/v1770814267/Fest4_vqjy3x.png" alt="FESTRONIX 2.0" style="width: 600px; max-width: 80vw; height: auto; filter: drop-shadow(0 0 25px rgba(255,0,0,0.6));">
-        </div>
-
-        <!-- TIMER -->
-        <div class="main-timer-section">
-            <div class="main-timer-content">
-                <div class="main-timer-title text-center mb-3" style="font-size: 1.8rem; color: #e7e7e7; text-transform: uppercase; letter-spacing: 3px;">
-                    <i class="fas fa-hourglass-half"></i> REGISTRATION CLOSES IN
-                </div>
-                <div class="main-timer-grid">
-                    <div class="main-timer-box text-center"><div class="main-timer-value" id="mainDays">00</div><div class="main-timer-label">Days</div></div>
-                    <div class="main-timer-box text-center"><div class="main-timer-value" id="mainHours">00</div><div class="main-timer-label">Hours</div></div>
-                    <div class="main-timer-box text-center"><div class="main-timer-value" id="mainMinutes">00</div><div class="main-timer-label">Minutes</div></div>
-                    <div class="main-timer-box text-center"><div class="main-timer-value" id="mainSeconds">00</div><div class="main-timer-label">Seconds</div></div>
+    <div class="ui-container">
+        
+        <!-- TIMER WRAPPER -->
+        <div class="timer-wrapper">
+            <div class="main-timer-section">
+                <div class="main-timer-content">
+                    <div class="main-timer-title text-center mb-3">
+                        <i class="fas fa-hourglass-half"></i> REGISTRATION CLOSES IN
+                    </div>
+                    <div class="main-timer-grid">
+                        <div class="main-timer-box text-center"><div class="main-timer-value" id="mainDays">00</div><div>Days</div></div>
+                        <div class="main-timer-box text-center"><div class="main-timer-value" id="mainHours">00</div><div>Hours</div></div>
+                        <div class="main-timer-box text-center"><div class="main-timer-value" id="mainMinutes">00</div><div>Mins</div></div>
+                        <div class="main-timer-box text-center"><div class="main-timer-value" id="mainSeconds">00</div><div>Secs</div></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- WELCOME TITLE -->
-        <div class="text-center mt-4" id="welcomeTitle"></div>
+        <div class="logo-container text-center">
+            <img src="https://res.cloudinary.com/dpc4l1hic/image/upload/v1770814267/Fest4_vqjy3x.png" alt="FESTRONIX 2.0" class="fest-logo">
+        </div>
+
+        <div class="text-center" id="welcomeTitle"></div>
+        
     </div>
 
-    <!-- 3D SLIDER - FASTER VERSION -->
+    <!-- 3D SLIDER -->
     <div class="scene">
         <div class="slider" id="slider"></div>
         <div class="slider-controls">
             <button class="slider-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
             <button class="slider-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- SIMPLE PROMO VIDEO -->
+    <div class="promo-section">
+        <div class="promo-header">
+            <i class="fas fa-play"></i> PROMO 2026
+        </div>
+        <video class="promo-video" id="promoVideo" loop playsinline preload="metadata" autoplay muted>
+            <source src="https://res.cloudinary.com/dpc4l1hic/video/upload/v1770814312/light_gzuewo.mp4" type="video/mp4">
+            <!-- Replace with your actual promo video URL -->
+        </video>
+        <div class="promo-controls">
+            <button class="mute-toggle" id="promoMuteBtn" title="Mute/Unmute">
+                <i class="fas fa-volume-mute"></i>
+            </button>
         </div>
     </div>
 
@@ -399,7 +539,6 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- OPTIMIZED SCRIPT - FASTER SLIDER -->
     <script>
         (function() {
             'use strict';
@@ -413,18 +552,81 @@
                 seconds: document.getElementById('mainSeconds'),
                 slider: document.getElementById('slider'),
                 welcomeTitle: document.getElementById('welcomeTitle'),
-                userAuthContainer: document.getElementById('userAuthContainer')
+                userAuthContainer: document.getElementById('userAuthContainer'),
+                promoVideo: document.getElementById('promoVideo'),
+                promoMuteBtn: document.getElementById('promoMuteBtn'),
+                desktopVideo: document.getElementById('desktopVideo'),
+                mobileVideo: document.getElementById('mobileVideo')
             };
 
-            // ---------- LOADER ----------
+            // ---------- SMART LOADER WITH ORIENTATION DETECTION ----------
             window.addEventListener('load', function() {
+                const loader = document.getElementById('loader');
+                
+                // Function to determine which video to play
+                function playAppropriateVideo() {
+                    const isMobile = window.innerWidth <= 768;
+                    
+                    // Pause both videos first
+                    if (DOM.desktopVideo) DOM.desktopVideo.pause();
+                    if (DOM.mobileVideo) DOM.mobileVideo.pause();
+                    
+                    // Play the appropriate video based on screen size
+                    if (isMobile && DOM.mobileVideo) {
+                        DOM.mobileVideo.play().catch(e => console.log('Mobile video autoplay failed:', e));
+                    } else if (!isMobile && DOM.desktopVideo) {
+                        DOM.desktopVideo.play().catch(e => console.log('Desktop video autoplay failed:', e));
+                    }
+                }
+                
+                // Initial play
+                playAppropriateVideo();
+
+                // Handle orientation change for mobile
+                window.addEventListener('orientationchange', function() {
+                    setTimeout(playAppropriateVideo, 250);
+                });
+
+                // Handle resize for desktop/tablet
+                let resizeTimer;
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(playAppropriateVideo, 250);
+                });
+
+                // Hide loader after duration
+                const isMobile = window.innerWidth <= 768;
+                const loaderDuration = isMobile ? 5000 : 7000; // Shorter on mobile for better UX
+                
                 setTimeout(() => {
-                    if (DOM.loader) DOM.loader.classList.add('loader-hidden');
-                }, 800);
+                    if (loader) {
+                        loader.classList.add('loader-hidden');
+                        
+                        // Pause videos to save resources
+                        if (DOM.desktopVideo && !DOM.desktopVideo.paused) {
+                            DOM.desktopVideo.pause();
+                        }
+                        if (DOM.mobileVideo && !DOM.mobileVideo.paused) {
+                            DOM.mobileVideo.pause();
+                        }
+                    }
+                }, loaderDuration); 
+
+                // Backup: Hide loader if any video ends
+                if (DOM.desktopVideo) {
+                    DOM.desktopVideo.addEventListener('ended', function() {
+                        if (loader) loader.classList.add('loader-hidden');
+                    });
+                }
+                if (DOM.mobileVideo) {
+                    DOM.mobileVideo.addEventListener('ended', function() {
+                        if (loader) loader.classList.add('loader-hidden');
+                    });
+                }
             });
 
             // ---------- TIMER ----------
-            const TARGET_DATE = new Date("2026-02-28T23:59:59").getTime();
+            const TARGET_DATE = new Date("2026-02-26T23:59:59").getTime();
             let lastUpdate = 0;
             
             function updateCountdown(timestamp) {
@@ -458,29 +660,42 @@
                 `;
             }
 
-            // ---------- FAST 3D SLIDER - INCREASED SPEED ----------
+            // ---------- PROMO VIDEO CONTROLS ----------
+            if (DOM.promoVideo && DOM.promoMuteBtn) {
+                // Start with muted state (required for autoplay)
+                DOM.promoVideo.muted = true;
+                
+                // Mute toggle functionality
+                DOM.promoMuteBtn.addEventListener('click', function() {
+                    if (DOM.promoVideo.muted) {
+                        DOM.promoVideo.muted = false;
+                        DOM.promoMuteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    } else {
+                        DOM.promoVideo.muted = true;
+                        DOM.promoMuteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                    }
+                });
+            }
+
+            // ---------- FAST 3D SLIDER ----------
             class FastSlider3D {
                 constructor() {
                     this.cards = [];
                     
-                    // DETECT DEVICE TYPE
                     const isMobile = window.innerWidth < 600;
                     const isTablet = window.innerWidth >= 600 && window.innerWidth < 1024;
                     
-                    // CONFIG - FASTER SPEEDS
                     this.config = {
                         count: isMobile ? 8 : (isTablet ? 10 : 12),
                         radius: isMobile ? 180 : (isTablet ? 300 : 400),
                         angle: 0,
-                        // MAIN SPEED SETTINGS - INCREASED SIGNIFICANTLY
-                        baseSpeed: isMobile ? 0.25 : 0.2,      // Normal rotation speed
-                        fastSpeed: isMobile ? 0.5 : 0.4,      // Speed when clicking buttons
-                        currentSpeed: isMobile ? 0.25 : 0.2,   // Start with base speed
+                        baseSpeed: isMobile ? 0.25 : 0.2,
+                        fastSpeed: isMobile ? 0.5 : 0.4,
+                        currentSpeed: isMobile ? 0.25 : 0.2,
                         isRunning: true,
                         direction: 1
                     };
                     
-                    // IMAGE ARRAY
                     this.images = [
                         'https://res.cloudinary.com/dpc4l1hic/image/upload/v1770814179/img16_pg2tn8.jpg',
                         'https://res.cloudinary.com/dpc4l1hic/image/upload/v1770814172/img13_td70sk.jpg',
@@ -521,7 +736,6 @@
                         fragment.appendChild(card);
                         this.cards.push(card);
                         
-                        // CLICK EVENT
                         card.addEventListener('click', (e) => {
                             e.preventDefault();
                             this.zoomToCard(i);
@@ -534,13 +748,11 @@
                 animate() {
                     if (!this.config.isRunning) return;
                     
-                    // UPDATE ANGLE WITH CURRENT SPEED
                     this.config.angle += this.config.currentSpeed * this.config.direction;
                     
                     const step = 360 / this.config.count;
                     const radius = this.config.radius;
                     
-                    // POSITION CARDS
                     for (let i = 0; i < this.cards.length; i++) {
                         const card = this.cards[i];
                         if (!card) continue;
@@ -553,7 +765,6 @@
                         const scale = 1 + (z / 2000);
                         const opacity = Math.max(0.4, Math.min(1, (z + 1000) / 1000));
                         
-                        // APPLY TRANSFORM
                         card.style.transform = `translate3d(${x}px, 0, ${z}px) scale(${scale})`;
                         card.style.zIndex = Math.floor(z + 1000);
                         card.style.opacity = opacity;
@@ -567,36 +778,17 @@
                     const nextBtn = document.getElementById('nextBtn');
                     
                     if (prevBtn) {
-                        // MOUSE DOWN - FAST CONTINUOUS ROTATION
                         prevBtn.addEventListener('mousedown', (e) => {
                             e.preventDefault();
                             this.config.direction = -1;
                             this.config.currentSpeed = this.config.fastSpeed;
                         });
                         
-                        // MOUSE UP - RETURN TO NORMAL SPEED
                         prevBtn.addEventListener('mouseup', () => {
                             this.config.currentSpeed = this.config.baseSpeed;
                         });
                         
                         prevBtn.addEventListener('mouseleave', () => {
-                            this.config.currentSpeed = this.config.baseSpeed;
-                        });
-                        
-                        // TOUCH EVENTS FOR MOBILE
-                        prevBtn.addEventListener('touchstart', (e) => {
-                            e.preventDefault();
-                            this.config.direction = -1;
-                            this.config.currentSpeed = this.config.fastSpeed;
-                        });
-                        
-                        prevBtn.addEventListener('touchend', (e) => {
-                            e.preventDefault();
-                            this.config.currentSpeed = this.config.baseSpeed;
-                        });
-                        
-                        prevBtn.addEventListener('touchcancel', (e) => {
-                            e.preventDefault();
                             this.config.currentSpeed = this.config.baseSpeed;
                         });
                     }
@@ -615,30 +807,12 @@
                         nextBtn.addEventListener('mouseleave', () => {
                             this.config.currentSpeed = this.config.baseSpeed;
                         });
-                        
-                        nextBtn.addEventListener('touchstart', (e) => {
-                            e.preventDefault();
-                            this.config.direction = 1;
-                            this.config.currentSpeed = this.config.fastSpeed;
-                        });
-                        
-                        nextBtn.addEventListener('touchend', (e) => {
-                            e.preventDefault();
-                            this.config.currentSpeed = this.config.baseSpeed;
-                        });
-                        
-                        nextBtn.addEventListener('touchcancel', (e) => {
-                            e.preventDefault();
-                            this.config.currentSpeed = this.config.baseSpeed;
-                        });
                     }
                 }
                 
                 zoomToCard(index) {
-                    // SMOOTH ZOOM TO CARD
                     const targetAngle = -index * (360 / this.config.count);
                     
-                    // ANIMATE TO TARGET ANGLE
                     const animateToTarget = () => {
                         const diff = targetAngle - this.config.angle;
                         if (Math.abs(diff) > 0.5) {
@@ -646,9 +820,7 @@
                             requestAnimationFrame(animateToTarget);
                         } else {
                             this.config.angle = targetAngle;
-                            // SIMULATE NAVIGATION
                             console.log(`Navigate to event ${index + 1}`);
-                            // window.location.href = `event-details.html?event=${index + 1}`;
                         }
                     };
                     
@@ -656,30 +828,30 @@
                 }
             }
 
-            // INITIALIZE SLIDER
             if (DOM.slider) {
                 new FastSlider3D();
             }
 
-            // ---------- USER AUTH ----------
             function updateUserAuth() {
                 if (!DOM.userAuthContainer) return;
                 
                 const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                const user = JSON.parse(localStorage.getItem('userData') || '{}');
                 
+                const btnStyle = "background: rgba(255,71,51,0.3); border: 2px solid #ff4733; display: flex; align-items: center; justify-content: center;";
+
                 if (isLoggedIn) {
-                    const user = JSON.parse(localStorage.getItem('userData') || '{}');
                     DOM.userAuthContainer.innerHTML = `
-                        <a class="user-auth-btn" href="#" style="display: flex; align-items: center; justify-content: center; background: rgba(255,71,51,0.3); color: white; padding: 0 15px; min-height: 70px; text-decoration: none; transition: all 0.2s ease;">
-                            <i class="fas fa-user"></i>
-                            <span style="margin-left: 8px;">${user.firstName || 'User'}</span>
+                        <a class="nav-link user-auth-btn" href="profile.html" style="${btnStyle}">
+                            <i class="fas fa-user me-3"></i>
+                            <span>${user.firstName || 'User'}</span>
                         </a>
                     `;
                 } else {
                     DOM.userAuthContainer.innerHTML = `
-                        <a class="user-auth-btn" href="signup.html" style="display: flex; align-items: center; justify-content: center; background: rgba(255,71,51,0.3); color: white; padding: 0 15px; min-height: 70px; text-decoration: none; transition: all 0.2s ease;">
-                            <i class="fas fa-user-plus"></i>
-                            <span style="margin-left: 8px;">Signup</span>
+                        <a class="nav-link user-auth-btn" href="signup.html" style="${btnStyle}">
+                            <i class="fas fa-user-plus me-3"></i>
+                            <span>Signup</span>
                         </a>
                     `;
                 }
@@ -710,7 +882,7 @@
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimeout);
                 resizeTimeout = setTimeout(() => {
-                    window.location.reload();
+                    console.log('Window resized');
                 }, 250);
             });
 
